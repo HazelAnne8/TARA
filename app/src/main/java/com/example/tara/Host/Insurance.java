@@ -47,7 +47,7 @@ public class Insurance extends AppCompatActivity implements View.OnClickListener
         getSupportActionBar().hide();
 
         Toolbar toolbar = findViewById(R.id.appBar);
-        Button nextBtn = findViewById(R.id.insuranceNextBtn);
+//        Button nextBtn = findViewById(R.id.insuranceNextBtn);
 
         etAmount= findViewById(R.id.etAmount);
         cvInsurance1 = findViewById(R.id.cvInsurance1);
@@ -86,19 +86,19 @@ public class Insurance extends AppCompatActivity implements View.OnClickListener
             }
         });
 
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("UseCompatLoadingForDrawables")
-            @Override
-            public void onClick(View view) {
-                if(radioGroup.getCheckedRadioButtonId()==-1||etAmount.getText().toString().equals("")){
-                    Toast.makeText(Insurance.this,"Some of the fields are empty! ",Toast.LENGTH_LONG).show();
-                }
-                else{
-                    startActivity(new Intent(Insurance.this,Protection.class));
-                    uploadImage();
-                }
-            }
-        });
+//        nextBtn.setOnClickListener(new View.OnClickListener() {
+//            @SuppressLint("UseCompatLoadingForDrawables")
+//            @Override
+//            public void onClick(View view) {
+//                if(radioGroup.getCheckedRadioButtonId()==-1||etAmount.getText().toString().equals("")){
+//                    Toast.makeText(Insurance.this,"Some of the fields are empty! ",Toast.LENGTH_LONG).show();
+//                }
+//                else{
+//                    startActivity(new Intent(Insurance.this,Protection.class));
+//                    //uploadImage();
+//                }
+//            }
+//        });
     }
     private void selectImage(int requestCode){ //opens image selector
         Intent galleryIntent = new Intent();
@@ -107,57 +107,25 @@ public class Insurance extends AppCompatActivity implements View.OnClickListener
         startActivityForResult(galleryIntent, requestCode);
     }
 
-    private void uploadImage(){
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.CANADA);
-        Date now = new Date();
-        String fileName = formatter.format(now);
-
-        StorageReference storageReference = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("insuranceImages/"+fileName);
-        storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    // retrieve image url and store in the  database
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        String imageUrl = task.getResult().toString();
-//                        String databaseLocation = getString(R.string.databasePath);
-//                        FirebaseDatabase.getInstance(databaseLocation).getReference().child("car").child(userId)
-//                                .push().setValue(imageUrl);
-                            Intent intent = new Intent();
-                            intent.putExtra("dataInsuranceUrl",imageUrl);
-                            //startActivity(intent);
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Insurance.this, "Something occurred, please try again later",Toast.LENGTH_LONG).show();
-            }
-        });
-    }
     //this method is executed when an image is selected
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         //if image is selected, display the image
-        if (requestCode == 1 && resultCode == -1 && data != null) {
+        if (requestCode == 17 && resultCode == -1 && data != null) {
             imageUri = data.getData();
             ivInsurance1.setImageURI(imageUri);
             cvInsurance1.setVisibility(View.VISIBLE);
             Toast.makeText(this, "insurance 1", Toast.LENGTH_LONG).show();
         }
-        if (requestCode == 2 && resultCode == -1 && data != null) {
+        if (requestCode == 18 && resultCode == -1 && data != null) {
             imageUri = data.getData();
             ivInsurance2.setImageURI(imageUri);
             cvInsurance2.setVisibility(View.VISIBLE);
             Toast.makeText(this, "insurance 2", Toast.LENGTH_LONG).show();
         }
-        if (requestCode == 3 && resultCode == -1 && data != null) {
+        if (requestCode == 19 && resultCode == -1 && data != null) {
             imageUri = data.getData();
             ivInsurance3.setImageURI(imageUri);
             Toast.makeText(this, "insurance 3", Toast.LENGTH_LONG).show();
@@ -169,14 +137,47 @@ public class Insurance extends AppCompatActivity implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.ivInsurance1:
-                selectImage(1);
+                selectImage(17);
                 break;
             case R.id.ivInsurance2:
-                selectImage(2);
+                selectImage(18);
                 break;
             case R.id.ivInsurance3:
-                selectImage(3);
+                selectImage(19);
                 break;
         }
     }
+
+//    private void uploadImage(){
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.CANADA);
+//        Date now = new Date();
+//        String fileName = formatter.format(now);
+//
+//        StorageReference storageReference = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("insuranceImages/"+fileName);
+//        storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//
+//                taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+//                    // retrieve image url and store in the  database
+//                    @Override
+//                    public void onComplete(@NonNull Task<Uri> task) {
+//                        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//                        String imageUrl = task.getResult().toString();
+////                        String databaseLocation = getString(R.string.databasePath);
+////                        FirebaseDatabase.getInstance(databaseLocation).getReference().child("car").child(userId)
+////                                .push().setValue(imageUrl);
+//                        Intent intent = new Intent();
+//                        intent.putExtra("dataInsuranceUrl",imageUrl);
+//                        //startActivity(intent);
+//                    }
+//                });
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(Insurance.this, "Something occurred, please try again later",Toast.LENGTH_LONG).show();
+//            }
+//        });
+//    }
 }

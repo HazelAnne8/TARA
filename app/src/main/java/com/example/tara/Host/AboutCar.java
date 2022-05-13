@@ -18,14 +18,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tara.LoginRegistration.SignupActivity;
 import com.example.tara.Main.Main;
-import com.example.tara.Models.AboutModel;
 import com.example.tara.Models.UploadModel;
-import com.example.tara.Models.User;
 import com.example.tara.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -52,7 +48,7 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
     private CardView cvGrant1,cvGrant2,cvGrant3,cvTax1,cvTax2,cvTax3,cvExterior1,cvExterior2,cvExterior3,
                         cvInterior1,cvInterior2,cvInterior3;
     private String yearValue,brandValue,transmissionValue,drivetrainValue,seatsValue,typeValue,fuelTypeValue,
-            mileageValue, plateNoValue;
+            mileageValue;
     Uri imageUri;
     EditText etPriceRate, etDescription;
     EditText etAmount;
@@ -65,14 +61,14 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
     private RadioGroup trackCarRadioGroup;
 
     //all values, you can also put this on the string.xml para malinis tingnan
-    String[] year =  {"2022","2021","2020","2019","2018","2017","2016","2015","2014","2013","2012","2011"};
-    String[] brand = {"Toyota","Mitsubishi","Nisan","Hyundai","Ford","Suzuki","Honda"};
-    String[] transmission = {"Manual","Automatic","CVT"};
-    String[] drivetrain = {"AWD","4WD","FWD","RWD"};
-    String[] seat = {"2 Seater","3 Seater","4 Seater","5 Seater","6 Seater"};
-    String[] type = {"Sedan","Coupe","Sport car","Station wagon","Hatchback","Convertible","SUV","Minivan"};
-    String[] fuelType = {"Avgas","Avtur","Kerosene","Solar Oil","Diesel Oil","Fuel Oil","Biodiesel","Gasoline"};
-    String[] mileage = {"50-100K km","100-150K km","150-200K km","200-250K km","250-300K km"};
+    String[] yearArr =  {"2022","2021","2020","2019","2018","2017","2016","2015","2014","2013","2012","2011"};
+    String[] brandArr = {"Toyota","Mitsubishi","Nisan","Hyundai","Ford","Suzuki","Honda"};
+    String[] transmissionArr = {"Manual","Automatic","CVT"};
+    String[] drivetrainArr = {"AWD","4WD","FWD","RWD"};
+    String[] seatArr = {"2 Seater","3 Seater","4 Seater","5 Seater","6 Seater"};
+    String[] typeArr = {"Sedan","Coupe","Sport car","Station wagon","Hatchback","Convertible","SUV","Minivan"};
+    String[] fuelTypeArr = {"Avgas","Avtur","Kerosene","Solar Oil","Diesel Oil","Fuel Oil","Biodiesel","Gasoline"};
+    String[] mileageArr = {"50-100K km","100-150K km","150-200K km","200-250K km","250-300K km"};
 
     ArrayAdapter<String> yearItems, brandItems, transmissionItems, driveItems, seatItems, typeItems,
                         fuelItems,mileageItems;
@@ -85,6 +81,7 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
 
         Toolbar toolbar = findViewById(R.id.appBar);
         Button nextBtn = findViewById(R.id.aboutNextBtn);
+
         ivCarGrant1 = findViewById(R.id.carGrant1);
         ivCarGrant2 = findViewById(R.id.carGrant2);
         ivCarGrant3 = findViewById(R.id.carGrant3);
@@ -93,6 +90,7 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
         ivRoadTax2 = findViewById(R.id.roadTax2);
         ivRoadTax3 = findViewById(R.id.roadTax3);
         ivRoadTax4 = findViewById(R.id.roadTax4);
+
         etYear = findViewById(R.id.etYear);
         etBrand = findViewById(R.id.etBrand);
         etModel = findViewById(R.id.etModel);
@@ -103,6 +101,7 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
         etFuelType = findViewById(R.id.etFuelType);
         etMileage = findViewById(R.id.etMileage);
         etPlateNumber = findViewById(R.id.etPlateNumber);
+
         ivInterior1 = findViewById(R.id.carInterior1);
         ivInterior2 = findViewById(R.id.carInterior2);
         ivInterior3 = findViewById(R.id.carInterior3);
@@ -111,31 +110,61 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
         ivExterior2 = findViewById(R.id.carExterior2);
         ivExterior3 = findViewById(R.id.carExterior3);
         ivExterior4 = findViewById(R.id.carExterior4);
+
         cvGrant1 = findViewById(R.id.cv1);
         cvGrant2 = findViewById(R.id.cv2);
         cvGrant3 = findViewById(R.id.cv3);
+
         cvTax1 = findViewById(R.id.cv4);
         cvTax2 = findViewById(R.id.cv5);
         cvTax3 = findViewById(R.id.cv6);
+
         cvExterior1 = findViewById(R.id.cvExterior1);
         cvExterior2 = findViewById(R.id.cvExterior2);
         cvExterior3 = findViewById(R.id.cvExterior3);
         cvInterior1 = findViewById(R.id.cvInterior1);
         cvInterior2 = findViewById(R.id.cvInterior2);
         cvInterior3 = findViewById(R.id.cvInterior3);
+
         etModel = findViewById(R.id.etModel);
         etPlateNumber = findViewById(R.id.etPlateNumber);
         etPriceRate=  findViewById(R.id.etPricing);
         etDescription = findViewById(R.id.etDescription);
-        yearItems = new ArrayAdapter<String>(this,R.layout.list_item,year);
-        brandItems = new ArrayAdapter<String>(this,R.layout.list_item, brand);
-        transmissionItems = new ArrayAdapter<String>(this,R.layout.list_item,transmission);
-        driveItems = new ArrayAdapter<String>(this,R.layout.list_item,drivetrain);
-        seatItems = new ArrayAdapter<String>(this,R.layout.list_item,seat);
-        typeItems = new ArrayAdapter<String>(this,R.layout.list_item,type);
-        fuelItems = new ArrayAdapter<String>(this,R.layout.list_item,fuelType);
-        mileageItems = new ArrayAdapter<String>(this,R.layout.list_item,mileage);
 
+        yearItems = new ArrayAdapter<String>(this,R.layout.list_item, yearArr);
+        brandItems = new ArrayAdapter<String>(this,R.layout.list_item, brandArr);
+        transmissionItems = new ArrayAdapter<String>(this,R.layout.list_item, transmissionArr);
+        driveItems = new ArrayAdapter<String>(this,R.layout.list_item, drivetrainArr);
+        seatItems = new ArrayAdapter<String>(this,R.layout.list_item, seatArr);
+        typeItems = new ArrayAdapter<String>(this,R.layout.list_item, typeArr);
+        fuelItems = new ArrayAdapter<String>(this,R.layout.list_item, fuelTypeArr);
+        mileageItems = new ArrayAdapter<String>(this,R.layout.list_item, mileageArr);
+
+        etYear.setAdapter(yearItems);
+        etBrand.setAdapter(brandItems);
+        etTransmission.setAdapter(transmissionItems);
+        etDrivetrain.setAdapter(driveItems);
+        etSeats.setAdapter(seatItems);
+        etType.setAdapter(typeItems);
+        etFuelType.setAdapter(fuelItems);
+        etMileage.setAdapter(mileageItems);
+
+        etAmount= findViewById(R.id.etAmount);
+        cvInsurance1 = findViewById(R.id.cvInsurance1);
+        cvInsurance2 = findViewById(R.id.cvInsurance2);
+        ivInsurance1 = findViewById(R.id.ivInsurance1);
+        ivInsurance2 = findViewById(R.id.ivInsurance2);
+        ivInsurance3 = findViewById(R.id.ivInsurance3);
+        radioGroup = findViewById(R.id.insuranceRadioGroup);
+
+        etAL1 = findViewById(R.id.etAddressLine1);
+        etAL2 = findViewById(R.id.etAddressLine2);
+        etCity = findViewById(R.id.etCity);
+        etPostcode = findViewById(R.id.etPostcode);
+        etProvince =findViewById(R.id.etProvince);
+
+        protectionRadioGroup = findViewById(R.id.protectionRadioGroup);
+        trackCarRadioGroup = findViewById(R.id.trackRadioGroup);
 
         ivCarGrant1.setOnClickListener(this);
         ivCarGrant2.setOnClickListener(this);
@@ -153,33 +182,9 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
         ivInterior2.setOnClickListener(this);
         ivInterior3.setOnClickListener(this);
         ivInterior4.setOnClickListener(this);
-
-        etYear.setAdapter(yearItems);
-        etBrand.setAdapter(brandItems);
-        etTransmission.setAdapter(transmissionItems);
-        etDrivetrain.setAdapter(driveItems);
-        etSeats.setAdapter(seatItems);
-        etType.setAdapter(typeItems);
-        etFuelType.setAdapter(fuelItems);
-        etMileage.setAdapter(mileageItems);
-
-        etAmount= findViewById(R.id.etAmount);
-        cvInsurance1 = findViewById(R.id.cvInsurance1);
-        cvInsurance2 = findViewById(R.id.cvInsurance2);
-        ivInsurance1=findViewById(R.id.ivInsurance1);
-        ivInsurance2=findViewById(R.id.ivInsurance2);
-        ivInsurance3=findViewById(R.id.ivInsurance3);
-        radioGroup = findViewById(R.id.insuranceRadioGroup);
-
-        etAL1 = findViewById(R.id.etAddressLine1);
-        etAL2 = findViewById(R.id.etAddressLine2);
-        etCity = findViewById(R.id.etCity);
-        etPostcode = findViewById(R.id.etPostcode);
-        etProvince =findViewById(R.id.etProvince);
-
-        protectionRadioGroup=findViewById(R.id.protectionRadioGroup);
-        trackCarRadioGroup = findViewById(R.id.trackRadioGroup);
-
+        ivInsurance1.setOnClickListener(this);
+        ivInsurance2.setOnClickListener(this);
+        ivInsurance3.setOnClickListener(this);
 
         etYear.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -254,39 +259,50 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
                     Toast.makeText(AboutCar.this,"Some of the fields are empty!",Toast.LENGTH_LONG).show();
                 }else {
                     uploadImage("carImages/");
-                    uploadData(yearValue, brandValue, transmissionValue, drivetrainValue, seatsValue, typeValue, fuelTypeValue, mileageValue);
+                   // uploadData();
                 }
             }
         });
     }
 
     //upload data to database, from the name itself
-    private void uploadData(String year, String brand, String transmission, String drivetrain,String seats, String type, String fuelType, String mileage){
+    private void uploadData(String carUrl){
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
+        String databaseLocation = getString(R.string.databasePath);
 
         String address1 = etAL1.getText().toString();
         String address2 = etAL2.getText().toString();
         String city = etCity.getText().toString();
         String postcode = etPostcode.getText().toString();
         String province = etProvince.getText().toString();
-        String yearr = etYear.getText().toString();
-        String brandd = etBrand.getText().toString();
-        String transmissionn = etTransmission.getText().toString();
-        String drivetrainn = etDrivetrain.getText().toString();
-        String seatss = etSeats.getText().toString();
-        String typee = etType.getText().toString();
-        String fuelTypee = etFuelType.getText().toString();
-        String mileagee = etMileage.getText().toString();
+        String year = etYear.getText().toString();
+        String brand = etBrand.getText().toString();
+        String transmission = etTransmission.getText().toString();
+        String drivetrain = etDrivetrain.getText().toString();
+        String seats = etSeats.getText().toString();
+        String type = etType.getText().toString();
+        String fuelType = etFuelType.getText().toString();
+        String mileage = etMileage.getText().toString();
         String model = etModel.getText().toString();
         String plateNumber = etPlateNumber.getText().toString();
         String priceRate = etPriceRate.getText().toString();
         String description = etDescription.getText().toString();
 
+        UploadModel uploadModel = new UploadModel(address1,address2,city,postcode,province,year,brand,transmission,
+                drivetrain,seats,type,fuelType,mileage,model,plateNumber,priceRate,description,carUrl);
 
-        String databaseLocation = getString(R.string.databasePath);
+        FirebaseDatabase.getInstance(databaseLocation).getReference().child("users").child(userId)
+                .child("isHost").setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(AboutCar.this,"Something went wrong, try again",Toast.LENGTH_LONG).show();
+            }
+        });
 
-        UploadModel uploadModel = new UploadModel(address1,address2,city,postcode,province,yearr,brandd,transmissionn,drivetrainn,seatss,typee,fuelTypee,mileagee,model,plateNumber,priceRate,description);
         FirebaseDatabase.getInstance(databaseLocation).getReference().child("vehicle").child(userId)
                 .setValue(uploadModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -330,9 +346,7 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
 //                        String databaseLocation = getString(R.string.databasePath);
 //                        FirebaseDatabase.getInstance(databaseLocation).getReference().child("car").child(userId)
 //                                .push().setValue(imageUrl);
-                        Intent intent = new Intent();
-                        intent.putExtra("dataCarUrl",imageUrl);
-                        //startActivity(intent);
+                        uploadData(imageUrl);
                     }
                 });
             }
@@ -354,95 +368,91 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
             imageUri = data.getData();
             ivCarGrant1.setImageURI(imageUri);
             cvGrant1.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "grant 1",Toast.LENGTH_LONG).show();
         }
         if(requestCode==2 && resultCode== -1 && data != null){
             imageUri = data.getData();
             ivCarGrant2.setImageURI(imageUri);
             cvGrant2.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "grant 2",Toast.LENGTH_LONG).show();
         }
         if(requestCode==3 && resultCode== -1 && data != null){
             imageUri = data.getData();
             ivCarGrant3.setImageURI(imageUri);
             cvGrant3.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "grant 3",Toast.LENGTH_LONG).show();
         }
         if(requestCode==4 && resultCode== -1 && data != null){
             imageUri = data.getData();
             ivCarGrant4.setImageURI(imageUri);
-            Toast.makeText(this, "grant 4",Toast.LENGTH_LONG).show();
         }
-
         if(requestCode==5 && resultCode== -1 && data != null){
             imageUri = data.getData();
             ivRoadTax1.setImageURI(imageUri);
             cvTax1.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "road tax 1",Toast.LENGTH_LONG).show();
         }
         if(requestCode==6 && resultCode== -1 && data != null){
             imageUri = data.getData();
             ivRoadTax2.setImageURI(imageUri);
             cvTax2.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "road tax 2",Toast.LENGTH_LONG).show();
         }
         if(requestCode==7 && resultCode== -1 && data != null){
             imageUri = data.getData();
             ivRoadTax3.setImageURI(imageUri);
             cvTax3.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "road tax 3",Toast.LENGTH_LONG).show();
         }
         if(requestCode==8 && resultCode== -1 && data != null){
             imageUri = data.getData();
             ivRoadTax4.setImageURI(imageUri);
-            Toast.makeText(this, "road tax 4",Toast.LENGTH_LONG).show();
         }
         if(requestCode==9 && resultCode== -1 && data != null){
             imageUri = data.getData();
             ivExterior1.setImageURI(imageUri);
             cvExterior1.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "exterior 1",Toast.LENGTH_LONG).show();
         }
         if(requestCode==10 && resultCode== -1 && data != null){
             imageUri = data.getData();
             ivExterior2.setImageURI(imageUri);
             cvExterior2.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "exterior 2",Toast.LENGTH_LONG).show();
         }
         if(requestCode==11 && resultCode== -1 && data != null){
             imageUri = data.getData();
             ivExterior3.setImageURI(imageUri);
             cvExterior3.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "exterior 3",Toast.LENGTH_LONG).show();
         }
         if(requestCode==12 && resultCode== -1 && data != null){
             imageUri = data.getData();
             ivExterior4.setImageURI(imageUri);
-            Toast.makeText(this, "exterior 4",Toast.LENGTH_LONG).show();
         }
-
         if(requestCode==13 && resultCode== -1 && data != null){
             imageUri = data.getData();
             ivInterior1.setImageURI(imageUri);
             cvInterior1.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "interior 1",Toast.LENGTH_LONG).show();
         }
         if(requestCode==14 && resultCode== -1 && data != null){
             imageUri = data.getData();
             ivInterior2.setImageURI(imageUri);
             cvInterior2.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "interior 2",Toast.LENGTH_LONG).show();
         }
         if(requestCode==15 && resultCode== -1 && data != null){
             imageUri = data.getData();
             ivInterior3.setImageURI(imageUri);
             cvInterior3.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "interior 3",Toast.LENGTH_LONG).show();
         }
         if(requestCode==16 && resultCode== -1 && data != null){
             imageUri = data.getData();
             ivInterior4.setImageURI(imageUri);
-            Toast.makeText(this, "interior 4",Toast.LENGTH_LONG).show();
+        }
+        if (requestCode == 17 && resultCode == -1 && data != null) {
+            imageUri = data.getData();
+            ivInsurance1.setImageURI(imageUri);
+            cvInsurance1.setVisibility(View.VISIBLE);
+        }
+        if (requestCode == 18 && resultCode == -1 && data != null) {
+            imageUri = data.getData();
+            ivInsurance2.setImageURI(imageUri);
+            cvInsurance2.setVisibility(View.VISIBLE);
+        }
+        if (requestCode == 19 && resultCode == -1 && data != null) {
+            imageUri = data.getData();
+            ivInsurance3.setImageURI(imageUri);
         }
     }
 
@@ -497,6 +507,15 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
                 break;
             case R.id.carInterior4:
                 selectImage(16);
+                break;
+            case R.id.ivInsurance1:
+                selectImage(17);
+                break;
+            case R.id.ivInsurance2:
+                selectImage(18);
+                break;
+            case R.id.ivInsurance3:
+                selectImage(19);
                 break;
         }
     }
