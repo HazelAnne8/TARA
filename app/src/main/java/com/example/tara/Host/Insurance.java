@@ -123,9 +123,12 @@ public class Insurance extends AppCompatActivity implements View.OnClickListener
                     public void onComplete(@NonNull Task<Uri> task) {
                         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         String imageUrl = task.getResult().toString();
-                        String databaseLocation = getString(R.string.databasePath);
-                        FirebaseDatabase.getInstance(databaseLocation).getReference().child("users").child(userId)
-                                .child("car").child("insuranceImage").setValue(imageUrl);
+//                        String databaseLocation = getString(R.string.databasePath);
+//                        FirebaseDatabase.getInstance(databaseLocation).getReference().child("car").child(userId)
+//                                .push().setValue(imageUrl);
+                            Intent intent = new Intent();
+                            intent.putExtra("dataImageUrl",imageUrl);
+                            startActivity(intent);
                     }
                 });
             }

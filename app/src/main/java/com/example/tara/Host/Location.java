@@ -26,6 +26,7 @@ public class Location extends AppCompatActivity {
         setContentView(R.layout.activity_location);
         getSupportActionBar().hide();
 
+
         Toolbar toolbar = findViewById(R.id.appBar);
         Button nextBtn = findViewById(R.id.locationNextBtn);
         etAL1 = findViewById(R.id.etAddressLine1);
@@ -44,6 +45,7 @@ public class Location extends AppCompatActivity {
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View view) {
                 if(etAL1.getText().toString().isEmpty()){
                     etAL1.setError("Address line 1 is required");
@@ -66,16 +68,25 @@ public class Location extends AppCompatActivity {
         String postcode = etPostcode.getText().toString();
         String province = etProvince.getText().toString();
 
-        LocationModel model = new LocationModel(address1,address2,city,postcode,province);
+        Intent intent = new Intent(Location.this,AboutCar.class);
+        intent.putExtra("dataAL1",address1);
+        intent.putExtra("dataAL2",address2);
+        intent.putExtra("dataCity",city);
+        intent.putExtra("dataPostCOde",postcode);
+        intent.putExtra("dataProvince",province); //boss renz pogi
+        startActivity(intent);
 
-        String databaseLocation = getString(R.string.databasePath);
-        FirebaseDatabase.getInstance(databaseLocation).getReference().child("users").child(userId)
-                    .child("car").child("location").setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    startActivity(new Intent(Location.this,AboutCar.class));
-                }
-            });
+
+//        LocationModel model = new LocationModel(address1,address2,city,postcode,province);
+//
+//        String databaseLocation = getString(R.string.databasePath);
+//        FirebaseDatabase.getInstance(databaseLocation).getReference().child("car").child(userId)
+//                    .push().setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                @Override
+//                public void onComplete(@NonNull Task<Void> task) {
+//                    startActivity(new Intent(Location.this,AboutCar.class));
+//                }
+//            });
 
     }
 }

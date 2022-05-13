@@ -233,14 +233,25 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
         AboutModel aboutModel = new AboutModel(year,brand,transmission,drivetrain,seats,type,fuelType,mileage,model,plateNumber);
         String databaseLocation = getString(R.string.databasePath);
 
+        Intent intent = new Intent(AboutCar.this,Insurance.class);
+        intent.putExtra("dataYear",yearValue);
+        intent.putExtra("dataBrand",brandValue);
+        intent.putExtra("dataTransmission",transmissionValue);
+        intent.putExtra("dataDriveTrain",drivetrainValue);
+        intent.putExtra("dataSeats",seatsValue);
+        intent.putExtra("dataType", typeValue);
+        intent.putExtra("dataFuelType",fuelTypeValue);
+        intent.putExtra("dataMileage",mileageValue);
+        startActivity(intent);
+
         //understand how this works para alam kung pano naiistore sa database
-        FirebaseDatabase.getInstance(databaseLocation).getReference().child("users").child(userId)
-                .child("car").child("car_specs").setValue(aboutModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    startActivity(new Intent(AboutCar.this,Insurance.class));
-                }
-            });
+//        FirebaseDatabase.getInstance(databaseLocation).getReference().child("car").child(userId)
+//                .push().setValue(aboutModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                public void onComplete(@NonNull Task<Void> task) {
+//                    startActivity(new Intent(AboutCar.this,Insurance.class));
+//                }
+//            });
     }
 
     //opens image selector
@@ -273,8 +284,8 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
                         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         String imageUrl = task.getResult().toString();
                         String databaseLocation = getString(R.string.databasePath);
-                        FirebaseDatabase.getInstance(databaseLocation).getReference().child("users").child(userId)
-                                .child("car").child("carImage").setValue(imageUrl);
+                        FirebaseDatabase.getInstance(databaseLocation).getReference().child("car").child(userId)
+                                .push().setValue(imageUrl);
                     }
                 });
             }

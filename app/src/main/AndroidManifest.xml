@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TARA" >
         <activity
+            android:name=".Host.TEstData"
+            android:exported="false" />
+        <activity
             android:name=".ProfileActivities.AccountActivity"
             android:exported="false" />
         <activity

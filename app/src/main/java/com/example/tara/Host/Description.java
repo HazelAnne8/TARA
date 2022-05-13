@@ -91,17 +91,22 @@ public class Description extends AppCompatActivity {
                 Toast.makeText(Description.this,"Something went wrong, try again",Toast.LENGTH_LONG).show();
             }
         });
-        FirebaseDatabase.getInstance(databaseLocation).getReference().child("users").child(userId)
-                .child("car").child("price_and_description").setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                startActivity(new Intent(Description.this, Main.class));
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Description.this,"Something went wrong, try again",Toast.LENGTH_LONG).show();
-            }
-        });
+//        FirebaseDatabase.getInstance(databaseLocation).getReference().child("car").child(userId)
+//                .push().setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                startActivity(new Intent(Description.this, Main.class));
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(Description.this,"Something went wrong, try again",Toast.LENGTH_LONG).show();
+//            }
+//        });
+
+        Intent intent = new Intent(Description.this,Main.class);
+        intent.putExtra("dataPriceRate",priceRate);
+        intent.putExtra("dataDescription",description);
+        startActivity(intent);
     }
 }

@@ -32,9 +32,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
-            android:text="Brand Model Year"
-            android:textSize="13dp"
-            android:textColor="@color/black"/>
+            android:text="Location"
+            android:textColor="@color/black"
+            android:textSize="13dp" />
         <TextView
             android:id="@+id/tvPricing"
             android:layout_width="match_parent"
