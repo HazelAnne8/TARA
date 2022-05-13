@@ -47,26 +47,26 @@ public class HostedCars extends Fragment {
         databaseReference = FirebaseDatabase.getInstance(databaseLocation).getReference("users").child(userId);
 
         //fetch data from realtime database
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
-            //fetches data from database and displays it
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String imageUrl = snapshot.child("car").child("carImage").getValue().toString();
-                String model = snapshot.child("car").child("car_specs").child("model").getValue().toString();
-                String brand = snapshot.child("car").child("car_specs").child("brand").getValue().toString();
-                String year = snapshot.child("car").child("car_specs").child("year").getValue().toString();
-                String plateNumber = snapshot.child("car").child("car_specs").child("plateNumber").getValue().toString();
-
-                Glide.with(HostedCars.this).load(Uri.parse(imageUrl)).into(ivCarImage);
-                tvBrandModelYear.setText(model+" "+brand+" "+year);
-                tvPlateNumber.setText(plateNumber);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @SuppressLint("SetTextI18n")
+//            //fetches data from database and displays it
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                String imageUrl = snapshot.child("car").child("carImage").getValue().toString();
+//                String model = snapshot.child("car").child("car_specs").child("model").getValue().toString();
+//                String brand = snapshot.child("car").child("car_specs").child("brand").getValue().toString();
+//                String year = snapshot.child("car").child("car_specs").child("year").getValue().toString();
+//                String plateNumber = snapshot.child("car").child("car_specs").child("plateNumber").getValue().toString();
+//
+//                Glide.with(HostedCars.this).load(Uri.parse(imageUrl)).into(ivCarImage);
+//                tvBrandModelYear.setText(model+" "+brand+" "+year);
+//                tvPlateNumber.setText(plateNumber);
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
         return view;
     }

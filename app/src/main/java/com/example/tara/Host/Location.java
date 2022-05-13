@@ -72,7 +72,7 @@ public class Location extends AppCompatActivity {
         intent.putExtra("dataAL1",address1);
         intent.putExtra("dataAL2",address2);
         intent.putExtra("dataCity",city);
-        intent.putExtra("dataPostCOde",postcode);
+        intent.putExtra("dataPostCode",postcode);
         intent.putExtra("dataProvince",province); //boss renz pogi
         startActivity(intent);
 

@@ -31,7 +31,7 @@ public class Info extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Info.this,Location.class));
+                startActivity(new Intent(Info.this,AboutCar.class));
             }
         });
     }

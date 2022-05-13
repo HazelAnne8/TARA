@@ -17,9 +17,15 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tara.LoginRegistration.SignupActivity;
+import com.example.tara.Main.Main;
 import com.example.tara.Models.AboutModel;
+import com.example.tara.Models.UploadModel;
+import com.example.tara.Models.User;
 import com.example.tara.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -48,6 +54,15 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
     private String yearValue,brandValue,transmissionValue,drivetrainValue,seatsValue,typeValue,fuelTypeValue,
             mileageValue, plateNoValue;
     Uri imageUri;
+    EditText etPriceRate, etDescription;
+    EditText etAmount;
+    CardView cvInsurance1, cvInsurance2;
+    ImageView ivInsurance1,ivInsurance2,ivInsurance3;
+    private RadioGroup radioGroup;
+    String insuranceType;
+    private EditText etAL1, etAL2, etCity, etPostcode, etProvince;
+    private RadioGroup protectionRadioGroup;
+    private RadioGroup trackCarRadioGroup;
 
     //all values, you can also put this on the string.xml para malinis tingnan
     String[] year =  {"2022","2021","2020","2019","2018","2017","2016","2015","2014","2013","2012","2011"};
@@ -110,7 +125,8 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
         cvInterior3 = findViewById(R.id.cvInterior3);
         etModel = findViewById(R.id.etModel);
         etPlateNumber = findViewById(R.id.etPlateNumber);
-
+        etPriceRate=  findViewById(R.id.etPricing);
+        etDescription = findViewById(R.id.etDescription);
         yearItems = new ArrayAdapter<String>(this,R.layout.list_item,year);
         brandItems = new ArrayAdapter<String>(this,R.layout.list_item, brand);
         transmissionItems = new ArrayAdapter<String>(this,R.layout.list_item,transmission);
@@ -119,6 +135,7 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
         typeItems = new ArrayAdapter<String>(this,R.layout.list_item,type);
         fuelItems = new ArrayAdapter<String>(this,R.layout.list_item,fuelType);
         mileageItems = new ArrayAdapter<String>(this,R.layout.list_item,mileage);
+
 
         ivCarGrant1.setOnClickListener(this);
         ivCarGrant2.setOnClickListener(this);
@@ -145,6 +162,24 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
         etType.setAdapter(typeItems);
         etFuelType.setAdapter(fuelItems);
         etMileage.setAdapter(mileageItems);
+
+        etAmount= findViewById(R.id.etAmount);
+        cvInsurance1 = findViewById(R.id.cvInsurance1);
+        cvInsurance2 = findViewById(R.id.cvInsurance2);
+        ivInsurance1=findViewById(R.id.ivInsurance1);
+        ivInsurance2=findViewById(R.id.ivInsurance2);
+        ivInsurance3=findViewById(R.id.ivInsurance3);
+        radioGroup = findViewById(R.id.insuranceRadioGroup);
+
+        etAL1 = findViewById(R.id.etAddressLine1);
+        etAL2 = findViewById(R.id.etAddressLine2);
+        etCity = findViewById(R.id.etCity);
+        etPostcode = findViewById(R.id.etPostcode);
+        etProvince =findViewById(R.id.etProvince);
+
+        protectionRadioGroup=findViewById(R.id.protectionRadioGroup);
+        trackCarRadioGroup = findViewById(R.id.trackRadioGroup);
+
 
         etYear.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -228,30 +263,39 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
     //upload data to database, from the name itself
     private void uploadData(String year, String brand, String transmission, String drivetrain,String seats, String type, String fuelType, String mileage){
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+        String address1 = etAL1.getText().toString();
+        String address2 = etAL2.getText().toString();
+        String city = etCity.getText().toString();
+        String postcode = etPostcode.getText().toString();
+        String province = etProvince.getText().toString();
+        String yearr = etYear.getText().toString();
+        String brandd = etBrand.getText().toString();
+        String transmissionn = etTransmission.getText().toString();
+        String drivetrainn = etDrivetrain.getText().toString();
+        String seatss = etSeats.getText().toString();
+        String typee = etType.getText().toString();
+        String fuelTypee = etFuelType.getText().toString();
+        String mileagee = etMileage.getText().toString();
         String model = etModel.getText().toString();
         String plateNumber = etPlateNumber.getText().toString();
-        AboutModel aboutModel = new AboutModel(year,brand,transmission,drivetrain,seats,type,fuelType,mileage,model,plateNumber);
+        String priceRate = etPriceRate.getText().toString();
+        String description = etDescription.getText().toString();
+
+
         String databaseLocation = getString(R.string.databasePath);
 
-        Intent intent = new Intent(AboutCar.this,Insurance.class);
-        intent.putExtra("dataYear",yearValue);
-        intent.putExtra("dataBrand",brandValue);
-        intent.putExtra("dataTransmission",transmissionValue);
-        intent.putExtra("dataDriveTrain",drivetrainValue);
-        intent.putExtra("dataSeats",seatsValue);
-        intent.putExtra("dataType", typeValue);
-        intent.putExtra("dataFuelType",fuelTypeValue);
-        intent.putExtra("dataMileage",mileageValue);
-        startActivity(intent);
-
-        //understand how this works para alam kung pano naiistore sa database
-//        FirebaseDatabase.getInstance(databaseLocation).getReference().child("car").child(userId)
-//                .push().setValue(aboutModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                public void onComplete(@NonNull Task<Void> task) {
-//                    startActivity(new Intent(AboutCar.this,Insurance.class));
-//                }
-//            });
+        UploadModel uploadModel = new UploadModel(address1,address2,city,postcode,province,yearr,brandd,transmissionn,drivetrainn,seatss,typee,fuelTypee,mileagee,model,plateNumber,priceRate,description);
+        FirebaseDatabase.getInstance(databaseLocation).getReference().child("vehicle").child(userId)
+                .setValue(uploadModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Intent intent = new Intent(AboutCar.this, Main.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     //opens image selector
@@ -283,9 +327,12 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
                     public void onComplete(@NonNull Task<Uri> task) {
                         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         String imageUrl = task.getResult().toString();
-                        String databaseLocation = getString(R.string.databasePath);
-                        FirebaseDatabase.getInstance(databaseLocation).getReference().child("car").child(userId)
-                                .push().setValue(imageUrl);
+//                        String databaseLocation = getString(R.string.databasePath);
+//                        FirebaseDatabase.getInstance(databaseLocation).getReference().child("car").child(userId)
+//                                .push().setValue(imageUrl);
+                        Intent intent = new Intent();
+                        intent.putExtra("dataCarUrl",imageUrl);
+                        //startActivity(intent);
                     }
                 });
             }

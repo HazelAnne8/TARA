@@ -104,7 +104,7 @@ public class Description extends AppCompatActivity {
 //            }
 //        });
 
-        Intent intent = new Intent(Description.this,Main.class);
+        Intent intent = new Intent(Description.this,TEstData.class);
         intent.putExtra("dataPriceRate",priceRate);
         intent.putExtra("dataDescription",description);
         startActivity(intent);

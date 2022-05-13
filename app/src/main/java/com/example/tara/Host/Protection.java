@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.example.tara.R;
 
 public class Protection extends AppCompatActivity {
-    private RadioGroup radioGroup;
+    private RadioGroup protectionRadioGroup;
     String protectionType;
 
     @Override
@@ -25,9 +25,9 @@ public class Protection extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.appBar);
         Button nextBtn = findViewById(R.id.protectionNextBtn);
-        radioGroup=findViewById(R.id.protectionRadioGroup);
+        protectionRadioGroup=findViewById(R.id.protectionRadioGroup);
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        protectionRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -52,7 +52,7 @@ public class Protection extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(radioGroup.getCheckedRadioButtonId()==-1){
+                if(protectionRadioGroup.getCheckedRadioButtonId()==-1){
                     Toast.makeText(Protection.this,"Please select from above",Toast.LENGTH_LONG).show();
                 }
                 else{

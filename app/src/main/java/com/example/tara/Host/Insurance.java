@@ -127,8 +127,8 @@ public class Insurance extends AppCompatActivity implements View.OnClickListener
 //                        FirebaseDatabase.getInstance(databaseLocation).getReference().child("car").child(userId)
 //                                .push().setValue(imageUrl);
                             Intent intent = new Intent();
-                            intent.putExtra("dataImageUrl",imageUrl);
-                            startActivity(intent);
+                            intent.putExtra("dataInsuranceUrl",imageUrl);
+                            //startActivity(intent);
                     }
                 });
             }

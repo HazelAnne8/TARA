@@ -16,7 +16,7 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 
 public class Trackcar extends AppCompatActivity {
-    private RadioGroup radioGroup;
+    private RadioGroup trackCarRadioGroup;
     private String trackType;
 
     @Override
@@ -27,9 +27,9 @@ public class Trackcar extends AppCompatActivity {
 
         Button nextBtn = findViewById(R.id.trackerNextBtn);
         Toolbar toolbar = findViewById(R.id.appBar);
-        radioGroup = findViewById(R.id.trackRadioGroup);
+        trackCarRadioGroup = findViewById(R.id.trackRadioGroup);
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        trackCarRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 switch (i){
@@ -53,7 +53,7 @@ public class Trackcar extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(radioGroup.getCheckedRadioButtonId()==-1){
+                if(trackCarRadioGroup.getCheckedRadioButtonId()==-1){
                     Toast.makeText(Trackcar.this,"Please select from above",Toast.LENGTH_LONG).show();
                 }
                 startActivity(new Intent(Trackcar.this,Description.class));

@@ -29,7 +29,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <TextView
-        android:id="@+id/header"
+        android:id="@+id/descriptionHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
     <TextView
-        android:id="@+id/subHeader"
+        android:id="@+id/descriptionSubHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -56,7 +56,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header" />
+        app:layout_constraintTop_toBottomOf="@+id/descriptionHeader" />
 
 
     <EditText
@@ -74,10 +74,10 @@
         android:gravity="left|top"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/descriptionSubHeader" />
 
     <TextView
-        android:id="@+id/header2"
+        android:id="@+id/pricingHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -92,7 +92,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etDescription" />
 
     <TextView
-        android:id="@+id/subHeade2"
+        android:id="@+id/pricingSubHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -104,17 +104,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header2" />
+        app:layout_constraintTop_toBottomOf="@+id/pricingHeader" />
 
     <LinearLayout
-        android:id="@+id/ll"
+        android:id="@+id/llPricing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subHeade2">
+        app:layout_constraintTop_toBottomOf="@+id/pricingSubHeader">
 
         <TextView
             android:layout_width="match_parent"
