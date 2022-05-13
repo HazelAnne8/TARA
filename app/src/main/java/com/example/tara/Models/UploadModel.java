@@ -9,7 +9,6 @@ public class UploadModel {
     public UploadModel(){
 
     }
-
     public UploadModel(String address1, String address2, String city, String postcode, String province,
                        String year, String brand, String transmission, String drivetrain, String seats,
                        String type, String fuelType, String mileage, String model, String plateNumber,

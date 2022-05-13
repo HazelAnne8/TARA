@@ -81,7 +81,6 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
 
         Toolbar toolbar = findViewById(R.id.appBar);
         Button nextBtn = findViewById(R.id.aboutNextBtn);
-
         ivCarGrant1 = findViewById(R.id.carGrant1);
         ivCarGrant2 = findViewById(R.id.carGrant2);
         ivCarGrant3 = findViewById(R.id.carGrant3);
@@ -241,7 +240,6 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
                 mileageValue = parent.getItemAtPosition(position).toString();
             }
         });
-
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
