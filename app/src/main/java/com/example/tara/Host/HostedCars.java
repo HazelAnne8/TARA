@@ -1,6 +1,7 @@
 package com.example.tara.Host;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,11 +11,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.tara.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,8 +39,14 @@ public class HostedCars extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_hosted_cars, container, false);
-
-        tvBrandModelYear = view.findViewById(R.id.tvBrandModelYear);
+        FloatingActionButton addButton = view.findViewById(R.id.addButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), HostCar.class));
+            }
+        });
+                tvBrandModelYear = view.findViewById(R.id.tvBrandModelYear);
         tvPlateNumber = view.findViewById(R.id.tvPlateNumber);
         ivCarImage = view.findViewById(R.id.ivCarImage);
 
@@ -62,6 +71,8 @@ public class HostedCars extends Fragment {
                 tvBrandModelYear.setText(model+" "+brand+" "+year);
                 tvPlateNumber.setText(plateNumber);
             }
+
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -70,6 +81,8 @@ public class HostedCars extends Fragment {
 
         return view;
     }
+
+
 }
 
 

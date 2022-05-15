@@ -6,11 +6,6 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.tara.Host.AboutCar;
-import com.example.tara.Host.Description;
-import com.example.tara.Host.Insurance;
-import com.example.tara.Host.Protection;
-import com.example.tara.Host.Trackcar;
 import com.example.tara.LoginRegistration.LoginActivity;
 import com.example.tara.R;
 

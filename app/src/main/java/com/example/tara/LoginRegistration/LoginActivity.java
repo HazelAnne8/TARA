@@ -62,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         //if the user has already signed in, proceed to the main activity
         if(mAuth.getCurrentUser() != null){
             startActivity(new Intent(LoginActivity.this,Main.class));
+            Toast.makeText(LoginActivity.this,"Account detected: " + mAuth.getCurrentUser().getUid(),Toast.LENGTH_LONG).show();
             finish();
         }
 

@@ -1,4 +1,4 @@
-package com.example.tara.NavMenu;
+package com.example.tara.Profile;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -19,8 +19,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.bumptech.glide.Glide;
 import com.example.tara.LoginRegistration.LoginActivity;
 import com.example.tara.Models.User;
-import com.example.tara.ProfileActivities.AccountActivity;
-import com.example.tara.ProfileActivities.EditProfile;
 import com.example.tara.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -34,7 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragmentMenu extends Fragment {
 
     private TextView tvAccount,logoutBtn,tvUserName;
     private ImageView ivPhoto;

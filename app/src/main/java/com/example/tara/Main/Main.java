@@ -14,10 +14,10 @@ import android.widget.Toast;
 
 import com.example.tara.Host.HostedCars;
 import com.example.tara.Models.User;
-import com.example.tara.NavMenu.ProfileFragment;
-import com.example.tara.NavMenu.ExploreFragment;
-import com.example.tara.NavMenu.HostFragment;
-import com.example.tara.NavMenu.BookingsFragment;
+import com.example.tara.Profile.ProfileFragmentMenu;
+import com.example.tara.Explore.ExploreFragmentMenu;
+import com.example.tara.Host.HostFragmentMenu;
+import com.example.tara.Bookings.BookingsFragmentMenu;
 import com.example.tara.R;
 import com.example.tara.databinding.MainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -48,7 +48,7 @@ public class Main extends AppCompatActivity {
 
         binding = MainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new ExploreFragment());
+        replaceFragment(new ExploreFragmentMenu());
 
         navigation = findViewById(R.id.bottomNavigationView);
         mAuth = FirebaseAuth.getInstance();
@@ -82,19 +82,19 @@ public class Main extends AppCompatActivity {
         binding.bottomNavigationView.setOnItemSelectedListener(item->{
             switch ((item.getItemId())){
                 case R.id.search:
-                    replaceFragment(new ExploreFragment());
+                    replaceFragment(new ExploreFragmentMenu());
                     break;
                 case R.id.bookings:
-                    replaceFragment(new BookingsFragment());
+                    replaceFragment(new BookingsFragmentMenu());
                     break;
                 case R.id.profile:
-                    replaceFragment(new ProfileFragment());
+                    replaceFragment(new ProfileFragmentMenu());
                     break;
                 case R.id.host:
                     if(isHost)
                         replaceFragment(new HostedCars());
                     else
-                        replaceFragment(new HostFragment());
+                        replaceFragment(new HostFragmentMenu());
                     break;
             }
 

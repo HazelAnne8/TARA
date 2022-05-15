@@ -37,7 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class AboutCar extends AppCompatActivity implements View.OnClickListener{
+public class HostCar extends AppCompatActivity implements View.OnClickListener{
     private ImageView ivCarGrant1,ivCarGrant2,ivCarGrant3,ivCarGrant4,
             ivRoadTax1,ivRoadTax2,ivRoadTax3,ivRoadTax4;
     AutoCompleteTextView etYear, etBrand, etTransmission, etDrivetrain,
@@ -49,7 +49,7 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
                         cvInterior1,cvInterior2,cvInterior3;
     private String yearValue,brandValue,transmissionValue,drivetrainValue,seatsValue,typeValue,fuelTypeValue,
             mileageValue;
-    Uri imageUri;
+    Uri imageUri, carUri;
     EditText etPriceRate, etDescription;
     EditText etAmount;
     CardView cvInsurance1, cvInsurance2;
@@ -67,7 +67,7 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
     String[] drivetrainArr = {"AWD","4WD","FWD","RWD"};
     String[] seatArr = {"2 Seater","3 Seater","4 Seater","5 Seater","6 Seater"};
     String[] typeArr = {"Sedan","Coupe","Sport car","Station wagon","Hatchback","Convertible","SUV","Minivan"};
-    String[] fuelTypeArr = {"Avgas","Avtur","Kerosene","Solar Oil","Diesel Oil","Fuel Oil","Biodiesel","Gasoline"};
+    String[] fuelTypeArr = {"Kerosene","Solar Oil","Diesel Oil","Fuel Oil","Biodiesel","Gasoline"};
     String[] mileageArr = {"50-100K km","100-150K km","150-200K km","200-250K km","250-300K km"};
 
     ArrayAdapter<String> yearItems, brandItems, transmissionItems, driveItems, seatItems, typeItems,
@@ -254,7 +254,7 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
                 if(yearValue==null||brandValue==null||transmissionValue==null||drivetrainValue==null||seatsValue==null
                     ||typeValue==null||fuelTypeValue==null||mileageValue==null||etModel.getText().toString().equals("")||
                 etPlateNumber.getText().toString().equals("")){
-                    Toast.makeText(AboutCar.this,"Some of the fields are empty!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(HostCar.this,"Some of the fields are empty!",Toast.LENGTH_LONG).show();
                 }else {
                     uploadImage("carImages/");
                    // uploadData();
@@ -285,9 +285,12 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
         String plateNumber = etPlateNumber.getText().toString();
         String priceRate = etPriceRate.getText().toString();
         String description = etDescription.getText().toString();
+        String bmy = brand + " " + model + " " + year;
+        String location = address1 + " " + address2 +" " + city + " " + province;
+        int vehicleCount = 0;
 
-        UploadModel uploadModel = new UploadModel(address1,address2,city,postcode,province,year,brand,transmission,
-                drivetrain,seats,type,fuelType,mileage,model,plateNumber,priceRate,description,carUrl);
+                UploadModel uploadModel = new UploadModel(address1,address2,city,postcode,province,year,brand,transmission,
+                drivetrain,seats,type,fuelType,mileage,model,plateNumber,priceRate,description,carUrl, bmy, location, vehicleCount);
 
         FirebaseDatabase.getInstance(databaseLocation).getReference().child("users").child(userId)
                 .child("isHost").setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -297,7 +300,7 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(AboutCar.this,"Something went wrong, try again",Toast.LENGTH_LONG).show();
+                Toast.makeText(HostCar.this,"Something went wrong, try again",Toast.LENGTH_LONG).show();
             }
         });
 
@@ -305,7 +308,7 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
                 .setValue(uploadModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                Intent intent = new Intent(AboutCar.this, Main.class);
+                Intent intent = new Intent(HostCar.this, Main.class);
                 startActivity(intent);
                 finish();
             }
@@ -331,7 +334,7 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
         StorageReference storageReference = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference(fileLocation+fileName);
 
         //stores the image
-        storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        storageReference.putFile(carUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
@@ -351,7 +354,7 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(AboutCar.this, "Something occurred, please try again later",Toast.LENGTH_LONG).show();
+                Toast.makeText(HostCar.this, "Something occurred, please try again later",Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -401,8 +404,8 @@ public class AboutCar extends AppCompatActivity implements View.OnClickListener{
             ivRoadTax4.setImageURI(imageUri);
         }
         if(requestCode==9 && resultCode== -1 && data != null){
-            imageUri = data.getData();
-            ivExterior1.setImageURI(imageUri);
+            carUri = data.getData();
+            ivExterior1.setImageURI(carUri);
             cvExterior1.setVisibility(View.VISIBLE);
         }
         if(requestCode==10 && resultCode== -1 && data != null){

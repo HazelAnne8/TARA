@@ -1,4 +1,4 @@
-package com.example.tara.ProfileActivities;
+package com.example.tara.Profile;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -154,7 +154,7 @@ public class EditProfile extends AppCompatActivity {
         progressDialog.setMessage("Please wait, we are setting your picture");
         progressDialog.show();
 
-        storageReference = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("images/"+fileName);
+        storageReference = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("profile/"+fileName);
         storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

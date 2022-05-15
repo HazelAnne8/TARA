@@ -1,11 +1,8 @@
-package com.example.tara.ProfileActivities;
+package com.example.tara.Profile;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tara.Models.User;
-import com.example.tara.NavMenu.ProfileFragment;
 import com.example.tara.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
