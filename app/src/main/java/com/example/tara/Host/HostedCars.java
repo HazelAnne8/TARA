@@ -7,6 +7,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.tara.Adapter.CarAdapter;
+import com.example.tara.Main.RecyclerViewInterface;
+import com.example.tara.Models.Car;
 import com.example.tara.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,14 +31,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 //displays all the users host cars
-public class HostedCars extends Fragment {
+public class HostedCars extends Fragment implements RecyclerViewInterface  {
 
     String databaseLocation;
     FirebaseAuth mAuth;
     TextView tvBrandModelYear, tvPlateNumber;
     ImageView ivCarImage;
     DatabaseReference databaseReference;
+    RecyclerView recyclerView;
+    DatabaseReference database;
+    ArrayList<Car> list;
+    CarAdapter vehicleAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,14 +59,22 @@ public class HostedCars extends Fragment {
                 startActivity(new Intent(getContext(), HostCar.class));
             }
         });
-                tvBrandModelYear = view.findViewById(R.id.tvBrandModelYear);
+
+
+        tvBrandModelYear = view.findViewById(R.id.tvBrandModelYear);
         tvPlateNumber = view.findViewById(R.id.tvPlateNumber);
         ivCarImage = view.findViewById(R.id.ivCarImage);
 
-        //connect to the database to fetch data
-        databaseLocation = getString(R.string.databasePath);
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        databaseReference = FirebaseDatabase.getInstance(databaseLocation).getReference("vehicle").child(userId);
+        String databaseLocation = getString(R.string.databasePath);
+        recyclerView = view.findViewById(R.id.vehicleList);
+        database = FirebaseDatabase.getInstance(databaseLocation).getReference("vehicle");
+        //recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        list = new ArrayList<>();
+        vehicleAdapter = new CarAdapter(getContext(),list,this);
+        recyclerView.setAdapter(vehicleAdapter);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
 
         //fetch data from realtime database
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -83,6 +104,10 @@ public class HostedCars extends Fragment {
     }
 
 
+    @Override
+    public void onItemClick(int position) {
+
+    }
 }
 
 

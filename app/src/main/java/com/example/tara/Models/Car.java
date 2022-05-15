@@ -1,8 +1,8 @@
 package com.example.tara.Models;
 
-import java.io.Serializable;
 
-public class Car implements Serializable {
+
+public class Car  {
     String carUrl, bmy, location, priceRate, userId;
 
     Car()
