@@ -21,7 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.tara.Main.Main;
-import com.example.tara.Models.UploadModel;
+import com.example.tara.Models.Upload;
 import com.example.tara.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -289,7 +289,7 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         String location = address1 + " " + address2 +" " + city + " " + province;
         int vehicleCount = 0;
 
-                UploadModel uploadModel = new UploadModel(address1,address2,city,postcode,province,year,brand,transmission,
+                Upload uploadModel = new Upload(address1,address2,city,postcode,province,year,brand,transmission,
                 drivetrain,seats,type,fuelType,mileage,model,plateNumber,priceRate,description,carUrl, bmy, location, vehicleCount);
 
         FirebaseDatabase.getInstance(databaseLocation).getReference().child("users").child(userId)
