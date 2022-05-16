@@ -14,7 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class CarDetails extends AppCompatActivity {
+public class   CarDetails extends AppCompatActivity {
     DatabaseReference database;
     TextView idTV;
     @Override

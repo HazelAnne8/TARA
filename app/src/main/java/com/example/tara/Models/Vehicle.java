@@ -1,14 +1,14 @@
 package com.example.tara.Models;
 
 public class Vehicle {
-    String bmy, plateNumber;
+    public String bmy, plateNumber, carUrl;
 
-    Vehicle(){
+    Vehicle(){ }
 
-    }
-    public Vehicle(String bmy, String plateNumber) {
+    public Vehicle(String bmy, String plateNumber, String carUrl) {
         this.bmy = bmy;
         this.plateNumber = plateNumber;
+        this.carUrl = carUrl;
     }
 
     public String getBmy() {
@@ -18,4 +18,6 @@ public class Vehicle {
     public String getPlateNumber() {
         return plateNumber;
     }
+
+    public String getCarUrl() { return carUrl; }
 }

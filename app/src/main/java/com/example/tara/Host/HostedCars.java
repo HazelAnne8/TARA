@@ -7,15 +7,24 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.tara.Adapter.VehicleAdapter;
+import com.example.tara.Main.RecyclerViewInterface;
+import com.example.tara.Models.Car;
+import com.example.tara.Models.Vehicle;
 import com.example.tara.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,53 +34,63 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 //displays all the users host cars
-public class HostedCars extends Fragment {
-//buko juice ni kier sadsadasdsadsadas
-    String databaseLocation;
-    FirebaseAuth mAuth;
-    TextView tvBrandModelYear, tvPlateNumber;
-    ImageView ivCarImage;
+public class HostedCars extends Fragment implements RecyclerViewInterface {
+
     DatabaseReference databaseReference;
+    RecyclerView recyclerView;
+    ArrayList<Vehicle> list;
+    VehicleAdapter adapter;
+    SwipeRefreshLayout swipeRefreshLayout;
+    String uId;
+    DataSnapshot dataSnapshot;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_hosted_cars, container, false);
-        FloatingActionButton addButton = view.findViewById(R.id.addButton);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), HostCar.class));
-            }
-        });
-        tvBrandModelYear = view.findViewById(R.id.tvBrandModelYear);
-        tvPlateNumber = view.findViewById(R.id.tvPlateNumber);
-        ivCarImage = view.findViewById(R.id.ivCarImage);
 
-        //connect to the database to fetch data
-        databaseLocation = getString(R.string.databasePath);
+//        FloatingActionButton addButton = view.findViewById(R.id.addButton);
+        String databaseLocation = getString(R.string.databasePath);
+
+        recyclerView = view.findViewById(R.id.vehicleRV);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        list = new ArrayList<>();
+        adapter = new VehicleAdapter(getContext(),list,this);
+        recyclerView.setAdapter(adapter);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshVH);
+
+//        addButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getContext(), HostCar.class));
+//            }
+//        });
+
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        databaseReference = FirebaseDatabase.getInstance(databaseLocation).getReference("vehicle").child(userId);
+        databaseReference = FirebaseDatabase.getInstance(databaseLocation).getReference("vehicle");
 
-        //fetch data from realtime database
         databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
-            //fetches data from database and displays it
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String imageUrl = snapshot.child("carUrl").getValue().toString();
-                String model = snapshot.child("model").getValue().toString();
-                String brand = snapshot.child("brand").getValue().toString();
-                String year = snapshot.child("year").getValue().toString();
-                String plateNumber = snapshot.child("plateNumber").getValue().toString();
+                dataSnapshot = snapshot;
 
-               // Glide.with(HostedCars.this).load(Uri.parse(imageUrl)).into(ivCarImage);
-                tvBrandModelYear.setText(model+" "+brand+" "+year);
-                tvPlateNumber.setText(plateNumber);
+                list.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    if(snapshot.exists()){
+                        Vehicle vehicle = dataSnapshot.getValue(Vehicle.class);
+                        list.add(vehicle);
+                        Toast.makeText(getContext(),"Hosted Cars",Toast.LENGTH_LONG).show();
+                    }
+                    else
+                        Toast.makeText(getContext(),"No hosted cars founded!",Toast.LENGTH_LONG).show();
+
+                }
+                adapter.notifyDataSetChanged();
             }
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -79,8 +98,43 @@ public class HostedCars extends Fragment {
             }
         });
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                list.clear();
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        databaseReference.addValueEventListener(new ValueEventListener() {
+                            @SuppressLint("NotifyDataSetChanged")
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                    Vehicle vehicle = dataSnapshot.getValue(Vehicle.class);
+                                    list.add(vehicle);
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 500);
+            }
+        });
+
         return view;
     }
 
 
+    @Override
+    public void onItemClick(int position) {
+
+    }
 }

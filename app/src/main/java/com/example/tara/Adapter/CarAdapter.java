@@ -1,6 +1,5 @@
 package com.example.tara.Adapter;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 
 public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder>{
     private final RecyclerViewInterface recyclerViewInterface;
-    private int lastPosition = -1;
+    private final int lastPosition = -1;
     Context context;
 
     ArrayList<Car> list;
