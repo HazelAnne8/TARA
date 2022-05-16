@@ -27,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 //displays all the users host cars
 public class HostedCars extends Fragment {
-//buko juice ni kier
+//buko juice ni kier sadsadas
     String databaseLocation;
     FirebaseAuth mAuth;
     TextView tvBrandModelYear, tvPlateNumber;
