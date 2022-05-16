@@ -35,7 +35,7 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
     CarAdapter myAdapter;
     ArrayList<Car> list;
     SwipeRefreshLayout swipeRefreshLayout;
-    String id, uId;;
+    String uId;;
     DataSnapshot dataSnapshot;
 
     @Override
@@ -46,9 +46,7 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
         String databaseLocation = getString(R.string.databasePath);
         recyclerView = view.findViewById(R.id.carListRV);
         database = FirebaseDatabase.getInstance(databaseLocation).getReference("vehicle");
-        //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         list = new ArrayList<>();
         myAdapter = new CarAdapter(getContext(),list,this);
         recyclerView.setAdapter(myAdapter);
@@ -60,7 +58,6 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 dataSnapshot = snapshot;
                 list.clear();
-                id = database.getKey();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Car car = dataSnapshot.getValue(Car.class);
                     list.add(car);

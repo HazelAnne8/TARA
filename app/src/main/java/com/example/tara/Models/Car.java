@@ -1,15 +1,9 @@
 package com.example.tara.Models;
 
-
-
 public class Car  {
-    String carUrl, bmy, location, priceRate, userId;
+    public String carUrl, bmy, location, priceRate, userId;
 
-    Car()
-    {
-    }
-
-
+    Car(){ }
 
     public Car(String carUrl, String bmy, String location, String priceRate, String userId){
         this.carUrl = carUrl;

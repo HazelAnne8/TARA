@@ -18,9 +18,6 @@
             android:name=".Explore.CarDetails"
             android:exported="false" />
         <activity
-            android:name=".Host.TEstData"
-            android:exported="false" />
-        <activity
             android:name=".Profile.AccountActivity"
             android:exported="false" />
         <activity
