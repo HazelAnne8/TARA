@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TARA">
         <activity
+            android:name=".Explore.CarDetails"
+            android:exported="false" />
+        <activity
             android:name=".Profile.Legal"
             android:exported="false" />
         <activity
