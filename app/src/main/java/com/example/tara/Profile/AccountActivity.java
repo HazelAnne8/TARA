@@ -72,6 +72,7 @@ public class AccountActivity extends AppCompatActivity {
                     Toast.makeText(AccountActivity.this,"Error retrieving info",Toast.LENGTH_LONG).show();
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 

@@ -15,6 +15,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TARA">
         <activity
+            android:name=".Profile.Legal"
+            android:exported="false" />
+        <activity
+            android:name=".Profile.ContactSupport"
+            android:exported="false" />
+        <activity
+            android:name=".Profile.HowTaraWorks"
+            android:exported="false" />
+        <activity
+            android:name=".Profile.TaxInformation"
+            android:exported="false" />
+        <activity
+            android:name=".Profile.TransactionHistory"
+            android:exported="false" />
+        <activity
             android:name=".Explore.CarDetails"
             android:exported="false" />
         <activity

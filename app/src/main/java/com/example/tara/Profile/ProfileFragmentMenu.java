@@ -34,7 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ProfileFragmentMenu extends Fragment {
 
-    private TextView tvAccount,logoutBtn,tvUserName;
+    private TextView tvAccount,logoutBtn,tvUserName, tvTransactionHistory, tvTaxInformation, tvHowTaraWorks, tvContactSupport, tvLegal;
     private ImageView ivPhoto;
     GoogleSignInAccount signInAccount;
     String databaseLocation;
@@ -48,6 +48,11 @@ public class ProfileFragmentMenu extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        tvLegal = view.findViewById(R.id.legalBtn);
+        tvContactSupport = view.findViewById(R.id.contactSupportBtn);
+        tvHowTaraWorks = view.findViewById(R.id.howItWorksBtn);
+        tvTaxInformation = view.findViewById(R.id.taxInfoBtn);
+        tvTransactionHistory = view.findViewById(R.id.transacHistoryBtn);
         tvAccount = view.findViewById(R.id.accountBtn);
         logoutBtn = view.findViewById(R.id.logoutBtn);
         tvUserName = view.findViewById(R.id.userName);
@@ -77,6 +82,41 @@ public class ProfileFragmentMenu extends Fragment {
             @Override
             public void onClick(View view) {
                 logoutUser();
+            }
+        });
+
+        tvTransactionHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), TransactionHistory.class));
+            }
+        });
+
+        tvTaxInformation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), TaxInformation.class));
+            }
+        });
+
+        tvHowTaraWorks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), HowTaraWorks.class));
+            }
+        });
+
+        tvContactSupport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), ContactSupport.class));
+            }
+        });
+
+        tvLegal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), Legal.class));
             }
         });
 
