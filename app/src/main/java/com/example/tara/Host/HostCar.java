@@ -267,7 +267,6 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
     private void uploadData(String carUrl){
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String databaseLocation = getString(R.string.databasePath);
-
         String address1 = etAL1.getText().toString();
         String address2 = etAL2.getText().toString();
         String city = etCity.getText().toString();
