@@ -303,7 +303,7 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
             }
         });
 
-        FirebaseDatabase.getInstance(databaseLocation).getReference().child("vehicle").child(userId)
+        FirebaseDatabase.getInstance(databaseLocation).getReference().child("vehicle").push().child(userId)
                 .setValue(uploadModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
