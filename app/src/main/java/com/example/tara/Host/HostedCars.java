@@ -79,7 +79,7 @@ public class HostedCars extends Fragment implements RecyclerViewInterface {
                 dataSnapshot = snapshot;
                 list.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    for(DataSnapshot dataSnapshot1 : snapshot.getChildren()){
+                    for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                         String checkId = dataSnapshot1.getKey();
                         if(checkId.equals(userId)){
                             Vehicle vehicle = dataSnapshot1.getValue(Vehicle.class);
@@ -110,7 +110,7 @@ public class HostedCars extends Fragment implements RecyclerViewInterface {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                                    for(DataSnapshot dataSnapshot1 : snapshot.getChildren()){
+                                    for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                                         String checkId = dataSnapshot1.getKey();
                                         if(checkId.equals(userId)){
                                             Vehicle vehicle = dataSnapshot1.getValue(Vehicle.class);
