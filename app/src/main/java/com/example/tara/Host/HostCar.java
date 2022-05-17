@@ -69,7 +69,10 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
     String[] typeArr = {"Sedan","Coupe","Sport car","Station wagon","Hatchback","Convertible","SUV","Minivan"};
     String[] fuelTypeArr = {"Kerosene","Solar Oil","Diesel Oil","Fuel Oil","Biodiesel","Gasoline"};
     String[] mileageArr = {"50-100K km","100-150K km","150-200K km","200-250K km","250-300K km"};
-    String[] cityArr = {};
+    String[] cityArr = {"Alaminos","Angeles City","Antipolo","Bacolod","Bacoor"," Bago","Baguio","Bais","Balanga"
+                       ,"Batac","Batangas City","Bayawan","Baybay","Bayugan","Biñan","Bislig","Bogo","Borongan",
+                        "Butuan","Cabadbaran","Cabanatuan","Cabuyao","Cadiz","Cagayan de Oro","Calamba","Calbayog",
+                        "Caloocan","Candon","Canlaon","Carcar"   };
 
     ArrayAdapter<String> yearItems, brandItems, transmissionItems, driveItems, seatItems, typeItems,
                         fuelItems,mileageItems;
