@@ -67,7 +67,6 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
                 }
                 myAdapter.notifyDataSetChanged();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -113,15 +112,15 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
     @Override
     public void onItemClick(int position) {
         int index  = 0;
-
         for(DataSnapshot childSnapshot : dataSnapshot.getChildren()){
-            if(index == position){
-                DatabaseReference currentReference = childSnapshot.getRef();
-                uId = currentReference.getKey();
+            for(DataSnapshot childSnapshot1 : childSnapshot.getChildren()){
+                if(index == position){
+                    DatabaseReference currentReference = childSnapshot1.getRef();
+                    uId = currentReference.getKey();
+                }
+                index++;
             }
-            index++;
         }
-
         Intent intent = new Intent(getContext(), CarDetails.class);
         intent.putExtra("userId",uId);
         startActivity(intent);
