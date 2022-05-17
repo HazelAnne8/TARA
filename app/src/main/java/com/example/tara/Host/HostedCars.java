@@ -79,10 +79,12 @@ public class HostedCars extends Fragment implements RecyclerViewInterface {
                 dataSnapshot = snapshot;
                 list.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    String checkId = dataSnapshot.getKey();
-                    if(checkId.equals(userId)){
-                        Vehicle vehicle = dataSnapshot.getValue(Vehicle.class);
-                        list.add(vehicle);
+                    for(DataSnapshot dataSnapshot1 : snapshot.getChildren()){
+                        String checkId = dataSnapshot1.getKey();
+                        if(checkId.equals(userId)){
+                            Vehicle vehicle = dataSnapshot1.getValue(Vehicle.class);
+                            list.add(vehicle);
+                        }
                     }
                 }
 
@@ -108,8 +110,13 @@ public class HostedCars extends Fragment implements RecyclerViewInterface {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                                    Vehicle vehicle = dataSnapshot.getValue(Vehicle.class);
-                                    list.add(vehicle);
+                                    for(DataSnapshot dataSnapshot1 : snapshot.getChildren()){
+                                        String checkId = dataSnapshot1.getKey();
+                                        if(checkId.equals(userId)){
+                                            Vehicle vehicle = dataSnapshot1.getValue(Vehicle.class);
+                                            list.add(vehicle);
+                                        }
+                                    }
                                 }
                                 adapter.notifyDataSetChanged();
                             }

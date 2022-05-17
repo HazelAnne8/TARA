@@ -59,8 +59,11 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
                 dataSnapshot = snapshot;
                 list.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    Car car = dataSnapshot.getValue(Car.class);
-                    list.add(car);
+                    for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                        Car car = dataSnapshot1.getValue(Car.class);
+                        list.add(car);
+                    }
+
                 }
                 myAdapter.notifyDataSetChanged();
             }
