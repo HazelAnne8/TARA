@@ -69,10 +69,35 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
     String[] typeArr = {"Sedan","Coupe","Sport car","Station wagon","Hatchback","Convertible","SUV","Minivan"};
     String[] fuelTypeArr = {"Kerosene","Solar Oil","Diesel Oil","Fuel Oil","Biodiesel","Gasoline"};
     String[] mileageArr = {"50-100K km","100-150K km","150-200K km","200-250K km","250-300K km"};
-    String[] cityArr = {"Alaminos","Angeles City","Antipolo","Bacolod","Bacoor"," Bago","Baguio","Bais","Balanga"
-                       ,"Batac","Batangas City","Bayawan","Baybay","Bayugan","Biñan","Bislig","Bogo","Borongan",
+    String[] cityArr = {"Alaminos","Angeles City","Antipolo","Bacolod","Bacoor"," Bago","Baguio","Bais","Balanga",
+                        "Batac","Batangas City","Bayawan","Baybay","Bayugan","Biñan","Bislig","Bogo","Borongan",
                         "Butuan","Cabadbaran","Cabanatuan","Cabuyao","Cadiz","Cagayan de Oro","Calamba","Calbayog",
-                        "Caloocan","Candon","Canlaon","Carcar"   };
+                        "Caloocan","Candon","Canlaon","Carcar","Catbalogan","Cauayan","Cavity City","Cebu City",
+                        "Cotabato City","Dagupan","Danao","Dapitan","Dasamariñas","Davao City","Digos","Dipolog",
+                        "Dumaguete","El Salvador","Escalante","Gapan","General Santos","General Trias","Gingoog",
+                        "Guihulngan","Himamaylan","Ilagan","Iligan","Iloilo City","Imus","Iriga","Isabela",
+                        "Kabankalan","Kidapawan","Korondal","La Carlota","Lamitan","Laoag","Lapu-lapu City",
+                        "Las Piñas","Legazpi","Ligao","Lipa","Lucena","Maasin","Mabalacat","Makati","Malabon",
+                        "Malaybalay","Malolos","Mandaluyong","Mandaue","Manila","Marawi","Marikina","Masbate City",
+                        "Mati","Meycauayan","Muñoz","Muntinlupa","Naga Camarines","Naga Cebu","Navotas","Olongapo",
+                        "Ormoc","Oroquieta","Ozamiz","Pagadian","Palayan","Panabo","Parañaque","Pasay","Pasig",
+                        "Passi","Puerto Princesa","Quezon City","Roxas","Sagay","Samal","San Carlos(Negros Occidental)",
+                        "San Carlos(Pangasinan)","San Fernando(La Union)","San Fernando(Pampanga)","San Jose",
+                        "San Jose del Monte","San Juan","San Pablo","San Pedro","Santa Rosa","Santo Tomas","Santiago",
+                        "Silay","Sipalay","Sorsogon City","Surigao City","Tabaco","Tabuk","Tacloban","Tacurong","Tagaytay",
+                        "Tagbilaran","Taguig","Tagum","Talisay(Cebu)","Talisay(Negros Occidental","Tanauan","Tandag",
+                        "Tangub","Tanjay","Tarlac City","Tayabas","Toledo","Trece Martires","Tuguegarao","Urdaneta","Valencia",
+                        "Valenzuela","Victorias","Vigan","Zamboanga City"};
+    String[] provinceArr = {"Abra","Agusan Del Norte","Agusan Del Sur","Aklan","Albay","Antique","Apayao","Aurora","Basilan",
+                            "Bataan","Batanes","Batangas","Benguet","Biliran","Bohol","Bukidnon","Bulacan","Cagayan","Camarines Norte",
+                            "Camarines Sur","Camiguin","Capiz","Catanduanes","Cavite","Cebu","Compostella Valley","Cotabato","Davao Del Norte",
+                            "Davao Del Sur","Davao Occidental","Davao Oriental","Dinagat Islands","Eastern Samar","Guimaras","Ifugao",
+                            "Ilocos Norte","Ilocos Sur","Iloilo","Isabela","Kalinga","La Union","Laguna","Lanao Del Norte","Lanao Del Sur",
+                            "Leyte","Maguindanao","Marinduque","Masbate","Misamis Occidental","Misamis Oriental","Mountain Province",
+                            "Negros Occidental","Negros Oriental","Northern Samar","Nueva Ecija","Nueva Vizcaya","Occidental Mindoro",
+                            "Oriental Mindoro","Palawan","Pampanga","Pangasinan","Quezon","Quirino","Rizal","Romblon","Samar","Sarangani",
+                            "Siquijor","Sorsogon","South Cotabato","Southern Leyte","Sultan Kudarat","Sulu","Surigao Del Norte","Surigao Del Sur",
+                            "Tarlac","Tawi-tawi","Zambales","Zamboanga Del Norte","Zamboanga Del Sur","Zamboanga Sibugay"};
 
     ArrayAdapter<String> yearItems, brandItems, transmissionItems, driveItems, seatItems, typeItems,
                         fuelItems,mileageItems;
