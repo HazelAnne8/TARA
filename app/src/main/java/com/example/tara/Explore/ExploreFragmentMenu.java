@@ -35,7 +35,7 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
     CarAdapter myAdapter;
     ArrayList<Car> list;
     SwipeRefreshLayout swipeRefreshLayout;
-    String uId;;
+    String uId;
     DataSnapshot dataSnapshot;
 
     @Override
@@ -61,7 +61,6 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Car car = dataSnapshot.getValue(Car.class);
                     list.add(car);
-
                 }
                 myAdapter.notifyDataSetChanged();
             }

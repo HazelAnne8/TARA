@@ -52,7 +52,7 @@ public class HostedCars extends Fragment implements RecyclerViewInterface {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_hosted_cars, container, false);
 
-//        FloatingActionButton addButton = view.findViewById(R.id.addButton);
+        FloatingActionButton addButton = view.findViewById(R.id.addButton);
         String databaseLocation = getString(R.string.databasePath);
 
         recyclerView = view.findViewById(R.id.vehicleRV);
@@ -62,12 +62,12 @@ public class HostedCars extends Fragment implements RecyclerViewInterface {
         recyclerView.setAdapter(adapter);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshVH);
 
-//        addButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(getContext(), HostCar.class));
-//            }
-//        });
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), HostCar.class));
+            }
+        });
 
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance(databaseLocation).getReference("vehicle");
@@ -77,18 +77,15 @@ public class HostedCars extends Fragment implements RecyclerViewInterface {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 dataSnapshot = snapshot;
-
                 list.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    if(snapshot.exists()){
+                    String checkId = dataSnapshot.getKey();
+                    if(checkId.equals(userId)){
                         Vehicle vehicle = dataSnapshot.getValue(Vehicle.class);
                         list.add(vehicle);
-                        Toast.makeText(getContext(),"Hosted Cars",Toast.LENGTH_LONG).show();
                     }
-                    else
-                        Toast.makeText(getContext(),"No hosted cars founded!",Toast.LENGTH_LONG).show();
-
                 }
+
                 adapter.notifyDataSetChanged();
             }
 
