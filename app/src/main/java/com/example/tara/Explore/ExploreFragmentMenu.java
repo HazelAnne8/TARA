@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,8 +25,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.os.Handler;
+import android.widget.Toast;
 
 
 public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterface {
@@ -37,6 +40,7 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
     SwipeRefreshLayout swipeRefreshLayout;
     String uId;
     DataSnapshot dataSnapshot;
+    SearchView searchView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,6 +55,20 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
         myAdapter = new CarAdapter(getContext(),list,this);
         recyclerView.setAdapter(myAdapter);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
+        searchView = view.findViewById(R.id.searchView);
+        searchView.setFocusable(false);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return true;
+            }
+        });
 
         database.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
@@ -107,6 +125,30 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
             }
         });
         return view;
+    }
+
+    private void filterList(String newText) {
+        ArrayList<Car> filteredList = new ArrayList<>();
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                        String city = dataSnapshot1.child("city").getValue().toString();
+                        if(city.toLowerCase().contains(newText.toLowerCase())){
+                            Car car = dataSnapshot1.getValue(Car.class);
+                            filteredList.add(car);
+                        }
+                    }
+                    myAdapter.setFilteredList(filteredList);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override

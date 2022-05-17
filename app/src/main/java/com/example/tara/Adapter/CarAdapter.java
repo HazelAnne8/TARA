@@ -27,6 +27,11 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder>{
 
     ArrayList<Car> list;
 
+    public void setFilteredList(ArrayList<Car> filteredList){
+        this.list=filteredList;
+        notifyDataSetChanged();
+    }
+
     public CarAdapter(Context context, ArrayList<Car> list, RecyclerViewInterface recyclerViewInterface) {
         this.context = context;
         this.list = list;
