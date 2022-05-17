@@ -69,7 +69,7 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
     String[] typeArr = {"Sedan","Coupe","Sport car","Station wagon","Hatchback","Convertible","SUV","Minivan"};
     String[] fuelTypeArr = {"Kerosene","Solar Oil","Diesel Oil","Fuel Oil","Biodiesel","Gasoline"};
     String[] mileageArr = {"50-100K km","100-150K km","150-200K km","200-250K km","250-300K km"};
-    String[] cityArr = {"Alaminos","Angeles City","Antipolo","Bacolod","Bacoor"," Bago","Baguio","Bais","Balanga",
+    String[] cityArr = {"Alaminos","Angeles City","Antipolo","Bacolod","Bacoor","Bago","Baguio","Bais","Balanga",
                         "Batac","Batangas City","Bayawan","Baybay","Bayugan","Biñan","Bislig","Bogo","Borongan",
                         "Butuan","Cabadbaran","Cabanatuan","Cabuyao","Cadiz","Cagayan de Oro","Calamba","Calbayog",
                         "Caloocan","Candon","Canlaon","Carcar","Catbalogan","Cauayan","Cavity City","Cebu City",
@@ -105,7 +105,7 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_car);
+        setContentView(R.layout.activity_host_car);
         getSupportActionBar().hide();
 
         Toolbar toolbar = findViewById(R.id.appBar);
