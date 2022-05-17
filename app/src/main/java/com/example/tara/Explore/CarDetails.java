@@ -16,16 +16,20 @@ import com.google.firebase.database.ValueEventListener;
 
 public class   CarDetails extends AppCompatActivity {
     DatabaseReference database;
-    TextView idTV;
+    TextView idTV,tvAddress1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_details);
+        idTV = findViewById(R.id.tvId);
+        tvAddress1 = findViewById(R.id.tvAddress1);
 
         String databaseLocation = getString(R.string.databasePath);
+
         database = FirebaseDatabase.getInstance(databaseLocation).getReference("vehicle");
 
-        idTV = findViewById(R.id.tvId);
+
+
 
         database.addValueEventListener(new ValueEventListener() {
             @Override
@@ -33,6 +37,10 @@ public class   CarDetails extends AppCompatActivity {
 
                 String id = getIntent().getStringExtra("userId");
                 idTV.setText(id);
+                String address1 = getIntent().getStringExtra("address1");
+                tvAddress1.setText(address1);
+
+
             }
 
             @Override
