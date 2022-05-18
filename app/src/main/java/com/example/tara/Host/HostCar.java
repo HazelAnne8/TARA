@@ -97,6 +97,42 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
                             "Oriental Mindoro","Palawan","Pampanga","Pangasinan","Quezon","Quirino","Rizal","Romblon","Samar","Sarangani",
                             "Siquijor","Sorsogon","South Cotabato","Southern Leyte","Sultan Kudarat","Sulu","Surigao Del Norte","Surigao Del Sur",
                             "Tarlac","Tawi-tawi","Zambales","Zamboanga Del Norte","Zamboanga Del Sur","Zamboanga Sibugay"};
+    String[] municipalityArr = {"Bangued","Boliney","Bucay","Bucloc","Daguioman","Danglas","Dolores","Lacub","Langangilang","Langiden","La Paz","Licuan=Baay",
+                                "Luba","Malibcong","Manabo","Peñarrubia","Pidigan","Pilar","Sallapadan","San Isidro","San Juan","San Quintin","Tayum","Tineg","Tubo","Villaviciosa",
+                                "Bacacay","Camalig","Daraga (Locsin)","Guinobatan","Jovellar","Legazpi","Libon","Ligao","Malilipot","Malinao","Manito","Oas","Pio Duran","Polangui","Rapu-Rapu",
+                                "Santo Domingo (Libog)","Tabaco","Tiwi","Calanasan (Bayag)","Conner","Flora","Kabugao","Luna","Pudtol","Santa Marcela","Baler","Casiguran","Dilasag","Dinalungan","Dingalan",
+                                "Dipaculao","Maria Aurora","Maria Aurora","Abucay","Bagac","Balanga","Dinalupihan","Hermosa","Limay","Mariveles","Morong","Orani","Orion","Pilar","Samal",
+                                "Basco","Itbayat","Ivana","Mahatao","Sabtang","Uyugan","Agoncillo","Alitagtag","Balayan","Balete","Batangas","Bauan","Calaca","Calatagan","Cuenca",
+                                "Ibaan","Laurel","Lemery","Lian","Lipa","Lobo","Mabini","Malvar","Mataasnakahoy","Nasugbu","Padre Garcia","Rosario","San Jose","San Juan","San Luis",
+                                "San Nicolas","San Pascual","Santa Teresita","Santo Tomas","Taal","Talisay","Tanauan","Taysan","Tingloy","Tuy","Atok","Baguio","Bakun","Bokod","Buguias",
+                                "Itogon","Kabayan","Kapangan","Kibungan","La Trinidad","Mankayan","Sablan","Tuba","Tublay","Angat","Balagtas (Bigaa)","Baliuag","Bocaue","Bulacan (Bulakan)","Bustos",
+                                "Calumpit","Doña Remedios Trinidad","Guiguinto","Hagonoy","Malolos","Marilao","Meycauayan","Norzagaray","Obando","Pandi","Paombong","Plaridel","Pulilan","San Ildefonso","San Jose del Monte",
+                                "San Miguel","San Rafael","Santa Maria","Abulug","Alcala","Allacapan","","","","","","","","","",
+                                "","","","","","","","","","","","","","","",
+                                "","","","","","","","","","","","","","","",
+                                "","","","","","","","","","","","","","","",
+                                "","","","","","","","","","","","","","","",
+                                "","","","","","","","","","","","","","","",
+                                "","","","","","","","","","","","","","","",
+                                "","","","","","","","","","","","","","","",
+                                "","","","","","","","","","","","","","","",
+                                "","","","","","","","","","","","","","","",
+                                "","","","","","","","","","","","","","","",
+                                "","","","","","","","","","","","","","","",
+                                "","","","","","","","","","","","","","","",
+                                "","","","","","","","","","","","","","","",
+                                "","","","","","","","","","","","","","","",
+                                "","","","","","","","","","","","","","","",
+                                "","","","","","","","","","","","","","","",
+                                "","","","","","","","","","","","","","","",
+                                "","","","","","","","","","","","","","","",
+                                "","","","","","","","","","","","","","","",
+
+
+
+                                                                                       };
+
+
 
     ArrayAdapter<String> yearItems, brandItems, transmissionItems, driveItems, seatItems, typeItems,
                         fuelItems,mileageItems;
