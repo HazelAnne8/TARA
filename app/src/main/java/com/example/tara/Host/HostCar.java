@@ -21,7 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.tara.Main.Main;
-import com.example.tara.Models.Upload;
+import com.example.tara.Models.CarHost;
 import com.example.tara.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -34,6 +34,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -49,7 +50,9 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
                         cvInterior1,cvInterior2,cvInterior3;
     private String yearValue,brandValue,transmissionValue,drivetrainValue,seatsValue,typeValue,fuelTypeValue,
             mileageValue;
-    Uri imageUri, carUri;
+    Uri exterior1Uri,exterior2Uri,exterior3Uri,exterior4Uri,interior1Uri,interior2Uri,interior3Uri,interior4Uri
+            ,insurance1Uri,insurance2Uri,insurance3Uri,carGrant1Uri,carGrant2Uri,carGrant3Uri,carGrant4Uri
+            ,roadTax1Uri,roadTax2Uri,roadTax3Uri,roadTax4Uri;
     EditText etPriceRate, etDescription;
     EditText etAmount;
     CardView cvInsurance1, cvInsurance2;
@@ -97,6 +100,7 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
                             "Oriental Mindoro","Palawan","Pampanga","Pangasinan","Quezon","Quirino","Rizal","Romblon","Samar","Sarangani",
                             "Siquijor","Sorsogon","South Cotabato","Southern Leyte","Sultan Kudarat","Sulu","Surigao Del Norte","Surigao Del Sur",
                             "Tarlac","Tawi-tawi","Zambales","Zamboanga Del Norte","Zamboanga Del Sur","Zamboanga Sibugay"};
+
     String[] municipalityArr = {"Bangued","Boliney","Bucay","Bucloc","Daguioman","Danglas","Dolores","Lacub","Langangilang","Langiden","La Paz","Licuan=Baay",
                                 "Luba","Malibcong","Manabo","Peñarrubia","Pidigan","Pilar","Sallapadan","San Isidro","San Juan","San Quintin","Tayum","Tineg","Tubo","Villaviciosa",
                                 "Bacacay","Camalig","Daraga (Locsin)","Guinobatan","Jovellar","Libon","Malilipot","Malinao","Manito","Oas","Pio Duran","Polangui","Rapu-Rapu",
@@ -133,10 +137,10 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
                                 "Concepcion","Gerona","La Paz","Mayantoc","Moncada","Paniqui","Pura","Ramos","San Clemente","San Jose","San Manuel","Santa Ignacia","Victoria","Botolan","Cabangan",
                                 "Candelaria","Castillejos","Iba","Masinloc","Palauig","San Antonio","San Felipe","San Marcelino","San Narciso","Santa Cruz","Subic"};
 
-
-
     ArrayAdapter<String> yearItems, brandItems, transmissionItems, driveItems, seatItems, typeItems,
                         fuelItems,mileageItems;
+
+    ArrayList<Uri> imageUri = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -355,10 +359,9 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         String description = etDescription.getText().toString();
         String bmy = brand + " " + model + " " + year;
         String location = address1 + " " + address2 +" " + city + " " + province;
-        int vehicleCount = 0;
 
-                Upload uploadModel = new Upload(address1,address2,city,postcode,province,year,brand,transmission,
-                drivetrain,seats,type,fuelType,mileage,model,plateNumber,priceRate,description,carUrl, bmy, location, vehicleCount);
+        CarHost carHost = new CarHost(address1,address2,city,postcode,province,year,brand,transmission,
+                drivetrain,seats,type,fuelType,mileage,model,plateNumber,priceRate,description,carUrl, bmy, location);
 
         FirebaseDatabase.getInstance(databaseLocation).getReference().child("users").child(userId)
                 .child("isHost").setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -373,7 +376,7 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         });
 
         FirebaseDatabase.getInstance(databaseLocation).getReference().child("vehicle").push().child(userId)
-                .setValue(uploadModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                .setValue(carHost).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Intent intent = new Intent(HostCar.this, Main.class);
@@ -401,30 +404,48 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         //gets the location of the storage
         StorageReference storageReference = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference(fileLocation+fileName);
 
-        //stores the image
-        storageReference.putFile(carUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    // gets the image url and store in the realtime database
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        String imageUrl = task.getResult().toString();
-//                        String databaseLocation = getString(R.string.databasePath);
-//                        FirebaseDatabase.getInstance(databaseLocation).getReference().child("car").child(userId)
-//                                .push().setValue(imageUrl);
-                        uploadData(imageUrl);
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(HostCar.this, "Something occurred, please try again later",Toast.LENGTH_LONG).show();
-            }
-        });
+        for(int i = 0; i < imageUri.size(); i++){
+            storageReference.putFile(imageUri.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        // gets the image url and store in the realtime database
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            String imageUrl = task.getResult().toString();
+                            uploadData(imageUrl);
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(HostCar.this, "Something occurred, please try again later",Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+
+        //stores the image
+//        storageReference.putFile(exterior1Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+//                    // gets the image url and store in the realtime database
+//                    @Override
+//                    public void onComplete(@NonNull Task<Uri> task) {
+//                        String imageUrl = task.getResult().toString();
+//                        uploadData(imageUrl);
+//                    }
+//                });
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(HostCar.this, "Something occurred, please try again later",Toast.LENGTH_LONG).show();
+//            }
+//        });
     }
 
     //this method is executed when an image is selected
@@ -433,95 +454,114 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         super.onActivityResult(requestCode, resultCode, data);
 
         //if image is selected based on the code, display the image
-        if(requestCode==1 && resultCode== -1 && data != null){
-            imageUri = data.getData();
-            ivCarGrant1.setImageURI(imageUri);
+        if(requestCode==1 && resultCode== -1 && data != null && data.getData() != null){
+            carGrant1Uri = data.getData();
+            ivCarGrant1.setImageURI(carGrant1Uri);
             cvGrant1.setVisibility(View.VISIBLE);
+            imageUri.add(carGrant1Uri);
         }
-        if(requestCode==2 && resultCode== -1 && data != null){
-            imageUri = data.getData();
-            ivCarGrant2.setImageURI(imageUri);
+        if(requestCode==2 && resultCode== -1 && data != null && data.getData() != null){
+            carGrant2Uri = data.getData();
+            ivCarGrant2.setImageURI(carGrant2Uri);
             cvGrant2.setVisibility(View.VISIBLE);
+            imageUri.add(carGrant4Uri);
         }
-        if(requestCode==3 && resultCode== -1 && data != null){
-            imageUri = data.getData();
-            ivCarGrant3.setImageURI(imageUri);
+        if(requestCode==3 && resultCode== -1 && data != null && data.getData() != null){
+            carGrant3Uri = data.getData();
+            ivCarGrant3.setImageURI(carGrant3Uri);
             cvGrant3.setVisibility(View.VISIBLE);
+            imageUri.add(carGrant4Uri);
         }
-        if(requestCode==4 && resultCode== -1 && data != null){
-            imageUri = data.getData();
-            ivCarGrant4.setImageURI(imageUri);
+        if(requestCode==4 && resultCode== -1 && data != null && data.getData() != null){
+            carGrant4Uri = data.getData();
+            ivCarGrant4.setImageURI(carGrant4Uri);
+            imageUri.add(carGrant4Uri);
         }
-        if(requestCode==5 && resultCode== -1 && data != null){
-            imageUri = data.getData();
-            ivRoadTax1.setImageURI(imageUri);
+        if(requestCode==5 && resultCode== -1 && data != null && data.getData() != null){
+            roadTax1Uri = data.getData();
+            ivRoadTax1.setImageURI(roadTax1Uri);
             cvTax1.setVisibility(View.VISIBLE);
+            imageUri.add(roadTax1Uri);
         }
-        if(requestCode==6 && resultCode== -1 && data != null){
-            imageUri = data.getData();
-            ivRoadTax2.setImageURI(imageUri);
+        if(requestCode==6 && resultCode== -1 && data != null && data.getData() != null){
+            roadTax2Uri = data.getData();
+            ivRoadTax2.setImageURI(roadTax2Uri);
             cvTax2.setVisibility(View.VISIBLE);
+            imageUri.add(roadTax2Uri);
         }
-        if(requestCode==7 && resultCode== -1 && data != null){
-            imageUri = data.getData();
-            ivRoadTax3.setImageURI(imageUri);
+        if(requestCode==7 && resultCode== -1 && data != null && data.getData() != null){
+            roadTax3Uri = data.getData();
+            ivRoadTax3.setImageURI(roadTax3Uri);
             cvTax3.setVisibility(View.VISIBLE);
+            imageUri.add(roadTax3Uri);
         }
-        if(requestCode==8 && resultCode== -1 && data != null){
-            imageUri = data.getData();
-            ivRoadTax4.setImageURI(imageUri);
+        if(requestCode==8 && resultCode== -1 && data != null && data.getData() != null){
+            roadTax4Uri = data.getData();
+            ivRoadTax4.setImageURI(roadTax4Uri);
+            imageUri.add(roadTax4Uri);
         }
-        if(requestCode==9 && resultCode== -1 && data != null){
-            carUri = data.getData();
-            ivExterior1.setImageURI(carUri);
+        if(requestCode==9 && resultCode== -1 && data != null && data.getData() != null){
+            exterior1Uri = data.getData();
+            ivExterior1.setImageURI(exterior1Uri);
             cvExterior1.setVisibility(View.VISIBLE);
+            imageUri.add(exterior1Uri);
         }
-        if(requestCode==10 && resultCode== -1 && data != null){
-            imageUri = data.getData();
-            ivExterior2.setImageURI(imageUri);
+        if(requestCode==10 && resultCode== -1 && data != null && data.getData() != null){
+            exterior2Uri = data.getData();
+            ivExterior2.setImageURI(exterior2Uri);
             cvExterior2.setVisibility(View.VISIBLE);
+            imageUri.add(exterior2Uri);
         }
-        if(requestCode==11 && resultCode== -1 && data != null){
-            imageUri = data.getData();
-            ivExterior3.setImageURI(imageUri);
+        if(requestCode==11 && resultCode== -1 && data != null && data.getData() != null){
+            exterior3Uri = data.getData();
+            ivExterior3.setImageURI(exterior3Uri);
             cvExterior3.setVisibility(View.VISIBLE);
+            imageUri.add(exterior3Uri);
         }
-        if(requestCode==12 && resultCode== -1 && data != null){
-            imageUri = data.getData();
-            ivExterior4.setImageURI(imageUri);
+        if(requestCode==12 && resultCode== -1 && data != null && data.getData() != null){
+            exterior4Uri = data.getData();
+            ivExterior4.setImageURI(exterior4Uri);
+            imageUri.add(exterior4Uri);
         }
-        if(requestCode==13 && resultCode== -1 && data != null){
-            imageUri = data.getData();
-            ivInterior1.setImageURI(imageUri);
+        if(requestCode==13 && resultCode== -1 && data != null && data.getData() != null){
+            interior1Uri = data.getData();
+            ivInterior1.setImageURI(interior1Uri);
             cvInterior1.setVisibility(View.VISIBLE);
+            imageUri.add(interior1Uri);
         }
-        if(requestCode==14 && resultCode== -1 && data != null){
-            imageUri = data.getData();
-            ivInterior2.setImageURI(imageUri);
+        if(requestCode==14 && resultCode== -1 && data != null && data.getData() != null){
+            interior2Uri = data.getData();
+            ivInterior2.setImageURI(interior2Uri);
             cvInterior2.setVisibility(View.VISIBLE);
+            imageUri.add(interior2Uri);
         }
-        if(requestCode==15 && resultCode== -1 && data != null){
-            imageUri = data.getData();
-            ivInterior3.setImageURI(imageUri);
+        if(requestCode==15 && resultCode== -1 && data != null && data.getData() != null){
+            interior3Uri = data.getData();
+            ivInterior3.setImageURI(interior3Uri);
             cvInterior3.setVisibility(View.VISIBLE);
+            imageUri.add(interior3Uri);
         }
-        if(requestCode==16 && resultCode== -1 && data != null){
-            imageUri = data.getData();
-            ivInterior4.setImageURI(imageUri);
+        if(requestCode==16 && resultCode== -1 && data != null && data.getData() != null){
+            interior4Uri = data.getData();
+            ivInterior4.setImageURI(interior4Uri);
+            imageUri.add(interior4Uri);
         }
-        if (requestCode == 17 && resultCode == -1 && data != null) {
-            imageUri = data.getData();
-            ivInsurance1.setImageURI(imageUri);
+        if (requestCode == 17 && resultCode == -1 && data != null && data.getData() != null) {
+            insurance1Uri = data.getData();
+            ivInsurance1.setImageURI(insurance1Uri);
             cvInsurance1.setVisibility(View.VISIBLE);
+            imageUri.add(insurance1Uri);
         }
-        if (requestCode == 18 && resultCode == -1 && data != null) {
-            imageUri = data.getData();
-            ivInsurance2.setImageURI(imageUri);
+        if (requestCode == 18 && resultCode == -1 && data != null && data.getData() != null) {
+            insurance2Uri = data.getData();
+            ivInsurance2.setImageURI(insurance2Uri);
             cvInsurance2.setVisibility(View.VISIBLE);
+            imageUri.add(insurance2Uri);
         }
-        if (requestCode == 19 && resultCode == -1 && data != null) {
-            imageUri = data.getData();
-            ivInsurance3.setImageURI(imageUri);
+        if (requestCode == 19 && resultCode == -1 && data != null && data.getData() != null) {
+            insurance3Uri = data.getData();
+            ivInsurance3.setImageURI(interior3Uri);
+            imageUri.add(insurance3Uri);
         }
     }
 

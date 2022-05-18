@@ -25,10 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import android.os.Handler;
-import android.widget.Toast;
 
 
 public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterface {
@@ -38,7 +36,7 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
     CarAdapter myAdapter;
     ArrayList<Car> list;
     SwipeRefreshLayout swipeRefreshLayout;
-    String uId;
+    String carId,uId;
     DataSnapshot dataSnapshot;
     SearchView searchView;
 
@@ -57,6 +55,7 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
         swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
         searchView = view.findViewById(R.id.searchView);
         searchView.setFocusable(false);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -157,12 +156,19 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
         for(DataSnapshot childSnapshot : dataSnapshot.getChildren()){
             if(index == position){
                 DatabaseReference currentReference = childSnapshot.getRef();
-                uId = currentReference.getKey();
+                carId = currentReference.getKey();
+            }
+            for(DataSnapshot childSnapshot2 : childSnapshot.getChildren()){
+                if(index == position){
+                    DatabaseReference ref2 = childSnapshot2.getRef();
+                    uId = ref2.getKey();
+                }
             }
             index++;
         }
         Intent intent = new Intent(getContext(), CarDetails.class);
-        intent.putExtra("userId",uId);
+        intent.putExtra("carId", carId);
+        intent.putExtra("userId", uId);
         startActivity(intent);
     }
 }
