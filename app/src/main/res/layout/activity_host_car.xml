@@ -64,12 +64,13 @@
             app:layout_constraintTop_toBottomOf="@+id/header" />
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/llAddressLine1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:orientation="vertical"
             android:paddingLeft="30dp"
+            android:paddingRight="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/subHeader">
@@ -82,23 +83,25 @@
 
             <EditText
                 android:id="@+id/etAddressLine1"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:paddingLeft="10dp"
+                android:hint="Address Line 1"
                 android:background="@drawable/et_background"/>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout2"
+            android:id="@+id/llAddressLine2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:orientation="vertical"
             android:paddingLeft="30dp"
+            android:paddingRight="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+            app:layout_constraintTop_toBottomOf="@+id/llAddressLine1">
 
             <TextView
                 android:layout_width="match_parent"
@@ -108,23 +111,52 @@
 
             <EditText
                 android:id="@+id/etAddressLine2"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:paddingLeft="10dp"
+                android:hint="Address Line 2"
                 android:background="@drawable/et_background"/>
         </LinearLayout>
 
+<!--        <LinearLayout-->
+<!--            android:id="@+id/linearLayout3"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:orientation="vertical"-->
+<!--            android:paddingLeft="30dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:text="City" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/etCity"-->
+<!--                android:layout_width="350dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:paddingLeft="10dp"-->
+<!--                android:background="@drawable/et_background"/>-->
+<!--        </LinearLayout>-->
+
+
         <LinearLayout
-            android:id="@+id/linearLayout3"
+            android:id="@+id/llCity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:orientation="vertical"
             android:paddingLeft="30dp"
+            android:paddingRight="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+            app:layout_constraintTop_toBottomOf="@+id/llAddressLine2">
 
             <TextView
                 android:layout_width="match_parent"
@@ -132,17 +164,19 @@
                 android:textColor="@color/black"
                 android:text="City" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/etCity"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="10dp"
+                android:hint="City"
                 android:paddingLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/et_background"/>
+
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout5"
+            android:id="@+id/llPostcode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -150,7 +184,7 @@
             android:paddingLeft="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+            app:layout_constraintTop_toBottomOf="@+id/llCity">
 
             <TextView
                 android:layout_width="match_parent"
@@ -164,19 +198,21 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:paddingLeft="10dp"
+                android:hint="Postcode"
                 android:background="@drawable/et_background"/>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout6"
+            android:id="@+id/llProvince"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:orientation="vertical"
             android:paddingLeft="30dp"
+            android:paddingRight="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+            app:layout_constraintTop_toBottomOf="@+id/llPostcode">
 
             <TextView
                 android:layout_width="match_parent"
@@ -184,12 +220,13 @@
                 android:textColor="@color/black"
                 android:text="Province" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/etProvince"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="10dp"
+                android:hint="Province"
                 android:paddingLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/et_background"/>
         </LinearLayout>
 
@@ -206,7 +243,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
+            app:layout_constraintTop_toBottomOf="@+id/llProvince" />
 
         <LinearLayout
             android:id="@+id/linearLayoutAC"
@@ -491,6 +528,7 @@
                 android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 android:paddingLeft="30dp"
+                android:paddingRight="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ll2">
@@ -503,7 +541,7 @@
 
                 <EditText
                     android:id="@+id/etModel"
-                    android:layout_width="350dp"
+                    android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"
                     android:paddingLeft="20dp"
@@ -637,6 +675,7 @@
                 android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 android:paddingLeft="30dp"
+                android:paddingRight="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ll7">
@@ -648,7 +687,7 @@
                     android:text="Fuel Type" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="350dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:hint="@string/select"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
@@ -668,6 +707,7 @@
                 android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 android:paddingLeft="30dp"
+                android:paddingRight="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ll8">
@@ -679,7 +719,7 @@
                     android:text="Mileage" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="350dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:hint="@string/select"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
@@ -698,6 +738,7 @@
                 android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 android:paddingLeft="30dp"
+                android:paddingRight="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ll9">
@@ -710,7 +751,7 @@
 
                 <EditText
                     android:id="@+id/etPlateNumber"
-                    android:layout_width="350dp"
+                    android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"
                     android:paddingLeft="20dp"
@@ -1347,7 +1388,7 @@
 
         <EditText
             android:id="@+id/etDescription"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginTop="50dp"
             android:layout_weight="1"
@@ -1356,6 +1397,8 @@
             android:maxLines="4"
             android:paddingLeft="15dp"
             android:paddingTop="15dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:background="@drawable/textbox"
             android:gravity="left|top"
             app:layout_constraintEnd_toEndOf="parent"

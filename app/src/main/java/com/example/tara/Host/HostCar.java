@@ -54,11 +54,8 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
     EditText etAmount;
     CardView cvInsurance1, cvInsurance2;
     ImageView ivInsurance1,ivInsurance2,ivInsurance3;
-    private RadioGroup radioGroup;
-    String insuranceType;
-    private EditText etAL1, etAL2, etCity, etPostcode, etProvince;
-    private RadioGroup protectionRadioGroup;
-    private RadioGroup trackCarRadioGroup;
+    private EditText etAL1, etAL2, etPostcode;
+    private AutoCompleteTextView  etCity, etProvince;
 
     //all values, you can also put this on the string.xml para malinis tingnan
     String[] yearArr =  {"2022","2021","2020","2019","2018","2017","2016","2015","2014","2013","2012","2011"};
@@ -69,6 +66,7 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
     String[] typeArr = {"Sedan","Coupe","Sport car","Station wagon","Hatchback","Convertible","SUV","Minivan"};
     String[] fuelTypeArr = {"Kerosene","Solar Oil","Diesel Oil","Fuel Oil","Biodiesel","Gasoline"};
     String[] mileageArr = {"50-100K km","100-150K km","150-200K km","200-250K km","250-300K km"};
+
     String[] cityArr = {"Alaminos","Angeles City","Antipolo","Bacolod","Bacoor","Bago","Baguio","Bais","Balanga",
                         "Batac","Batangas City","Bayawan","Baybay","Bayugan","Biñan","Bislig","Bogo","Borongan",
                         "Butuan","Cabadbaran","Cabanatuan","Cabuyao","Cadiz","Cagayan de Oro","Calamba","Calbayog",
@@ -88,6 +86,7 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
                         "Tagbilaran","Taguig","Tagum","Talisay(Cebu)","Talisay(Negros Occidental","Tanauan","Tandag",
                         "Tangub","Tanjay","Tarlac City","Tayabas","Toledo","Trece Martires","Tuguegarao","Urdaneta","Valencia",
                         "Valenzuela","Victorias","Vigan","Zamboanga City"};
+
     String[] provinceArr = {"Abra","Agusan Del Norte","Agusan Del Sur","Aklan","Albay","Antique","Apayao","Aurora","Basilan",
                             "Bataan","Batanes","Batangas","Benguet","Biliran","Bohol","Bukidnon","Bulacan","Cagayan","Camarines Norte",
                             "Camarines Sur","Camiguin","Capiz","Catanduanes","Cavite","Cebu","Compostella Valley","Cotabato","Davao Del Norte",
@@ -183,7 +182,7 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         ivInsurance1 = findViewById(R.id.ivInsurance1);
         ivInsurance2 = findViewById(R.id.ivInsurance2);
         ivInsurance3 = findViewById(R.id.ivInsurance3);
-        radioGroup = findViewById(R.id.insuranceRadioGroup);
+        RadioGroup radioGroup = findViewById(R.id.insuranceRadioGroup);
 
         etAL1 = findViewById(R.id.etAddressLine1);
         etAL2 = findViewById(R.id.etAddressLine2);
@@ -191,8 +190,8 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         etPostcode = findViewById(R.id.etPostcode);
         etProvince =findViewById(R.id.etProvince);
 
-        protectionRadioGroup = findViewById(R.id.protectionRadioGroup);
-        trackCarRadioGroup = findViewById(R.id.trackRadioGroup);
+        RadioGroup protectionRadioGroup = findViewById(R.id.protectionRadioGroup);
+        RadioGroup trackCarRadioGroup = findViewById(R.id.trackRadioGroup);
 
         ivCarGrant1.setOnClickListener(this);
         ivCarGrant2.setOnClickListener(this);
@@ -213,6 +212,14 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         ivInsurance1.setOnClickListener(this);
         ivInsurance2.setOnClickListener(this);
         ivInsurance3.setOnClickListener(this);
+
+
+        ArrayAdapter<String> cityAdapter = new ArrayAdapter<>(this,R.layout.list_item,cityArr);
+        ArrayAdapter<String> provinceAdapter = new ArrayAdapter<>(this,R.layout.list_item,provinceArr);
+        etCity.setAdapter(cityAdapter);
+        etProvince.setAdapter(provinceAdapter);
+
+
 
         etYear.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
