@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="Address Line 1" />
+                android:text="Street name, House number, Subdivision" />
 
             <EditText
                 android:id="@+id/etAddressLine1"
@@ -87,7 +87,7 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:paddingLeft="10dp"
-                android:hint="Address Line 1"
+                android:hint="Street name, House number, Subdivision"
                 android:background="@drawable/et_background"/>
         </LinearLayout>
 
@@ -107,7 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="Address Line 2" />
+                android:text="Barangay / District" />
 
             <EditText
                 android:id="@+id/etAddressLine2"
@@ -115,7 +115,7 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:paddingLeft="10dp"
-                android:hint="Address Line 2"
+                android:hint="Barangay / District"
                 android:background="@drawable/et_background"/>
         </LinearLayout>
 

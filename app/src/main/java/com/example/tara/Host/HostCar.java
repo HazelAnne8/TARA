@@ -54,7 +54,7 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
     EditText etAmount;
     CardView cvInsurance1, cvInsurance2;
     ImageView ivInsurance1,ivInsurance2,ivInsurance3;
-    private EditText etAL1, etAL2, etPostcode;
+    private EditText etStreetName, etBrngy, etPostcode;
     private AutoCompleteTextView  etCity, etProvince;
 
     //all values, you can also put this on the string.xml para malinis tingnan
@@ -221,8 +221,8 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         ivInsurance3 = findViewById(R.id.ivInsurance3);
         RadioGroup radioGroup = findViewById(R.id.insuranceRadioGroup);
 
-        etAL1 = findViewById(R.id.etAddressLine1);
-        etAL2 = findViewById(R.id.etAddressLine2);
+        etStreetName = findViewById(R.id.etAddressLine1);
+        etBrngy = findViewById(R.id.etAddressLine2);
         etCity = findViewById(R.id.etCity);
         etPostcode = findViewById(R.id.etPostcode);
         etProvince =findViewById(R.id.etProvince);
@@ -336,8 +336,8 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
     private void uploadData(String carUrl){
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String databaseLocation = getString(R.string.databasePath);
-        String address1 = etAL1.getText().toString();
-        String address2 = etAL2.getText().toString();
+        String address1 = etStreetName.getText().toString();
+        String address2 = etBrngy.getText().toString();
         String city = etCity.getText().toString();
         String postcode = etPostcode.getText().toString();
         String province = etProvince.getText().toString();
