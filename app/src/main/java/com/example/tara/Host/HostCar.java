@@ -126,11 +126,7 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
                                 "","","","","","","","","","","","","","","",
                                 "","","","","","","","","","","","","","","",
                                 "","","","","","","","","","","","","","","",
-                                "","","","","","","","","","","","","","","",
-
-
-
-                                                                                       };
+                                "","","","","","","","","","","","","","","",};
 
 
 
@@ -249,13 +245,10 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         ivInsurance2.setOnClickListener(this);
         ivInsurance3.setOnClickListener(this);
 
-
         ArrayAdapter<String> cityAdapter = new ArrayAdapter<>(this,R.layout.list_item,cityArr);
         ArrayAdapter<String> provinceAdapter = new ArrayAdapter<>(this,R.layout.list_item,provinceArr);
         etCity.setAdapter(cityAdapter);
         etProvince.setAdapter(provinceAdapter);
-
-
 
         etYear.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -329,7 +322,6 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
                     Toast.makeText(HostCar.this,"Some of the fields are empty!",Toast.LENGTH_LONG).show();
                 }else {
                     uploadImage("carImages/");
-                   // uploadData();
                 }
             }
         });
