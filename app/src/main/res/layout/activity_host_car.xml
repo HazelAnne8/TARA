@@ -119,33 +119,6 @@
                 android:background="@drawable/et_background"/>
         </LinearLayout>
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/linearLayout3"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="20dp"-->
-<!--            android:orientation="vertical"-->
-<!--            android:paddingLeft="30dp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">-->
-
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:text="City" />-->
-
-<!--            <EditText-->
-<!--                android:id="@+id/etCity"-->
-<!--                android:layout_width="350dp"-->
-<!--                android:layout_height="40dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:paddingLeft="10dp"-->
-<!--                android:background="@drawable/et_background"/>-->
-<!--        </LinearLayout>-->
-
-
         <LinearLayout
             android:id="@+id/llCity"
             android:layout_width="match_parent"
@@ -176,33 +149,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/llPostcode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical"
-            android:paddingLeft="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/llCity">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:text="Postcode" />
-
-            <EditText
-                android:id="@+id/etPostcode"
-                android:layout_width="350dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="10dp"
-                android:hint="Postcode"
-                android:background="@drawable/et_background"/>
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/llProvince"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -212,7 +158,7 @@
             android:paddingRight="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/llPostcode">
+            app:layout_constraintTop_toBottomOf="@+id/llCity">
 
             <TextView
                 android:layout_width="match_parent"
@@ -225,6 +171,62 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:hint="Province"
+                android:paddingLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/et_background"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llMunicipality"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/llProvince">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="Municipality" />
+
+            <AutoCompleteTextView
+                android:id="@+id/etMunicipality"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="Municipality"
+                android:paddingLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/et_background"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llPostcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/llMunicipality">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="Postcode" />
+
+            <EditText
+                android:id="@+id/etPostcode"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="Postcode"
                 android:paddingLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/et_background"/>
@@ -243,7 +245,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/llProvince" />
+            app:layout_constraintTop_toBottomOf="@+id/llPostcode" />
 
         <LinearLayout
             android:id="@+id/linearLayoutAC"
