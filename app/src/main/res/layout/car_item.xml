@@ -45,6 +45,14 @@
             android:orientation="horizontal">
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="₱ "
+                android:textColor="@color/red"
+                android:textSize="13dp"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
                 android:id="@+id/tvPricing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

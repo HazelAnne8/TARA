@@ -21,7 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.tara.Main.Main;
-import com.example.tara.Models.Upload;
+import com.example.tara.Models.CarHost;
 import com.example.tara.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -97,6 +97,7 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
                             "Oriental Mindoro","Palawan","Pampanga","Pangasinan","Quezon","Quirino","Rizal","Romblon","Samar","Sarangani",
                             "Siquijor","Sorsogon","South Cotabato","Southern Leyte","Sultan Kudarat","Sulu","Surigao Del Norte","Surigao Del Sur",
                             "Tarlac","Tawi-tawi","Zambales","Zamboanga Del Norte","Zamboanga Del Sur","Zamboanga Sibugay"};
+
     String[] municipalityArr = {"Bangued","Boliney","Bucay","Bucloc","Daguioman","Danglas","Dolores","Lacub","Langangilang","Langiden","La Paz","Licuan=Baay",
                                 "Luba","Malibcong","Manabo","Peñarrubia","Pidigan","Pilar","Sallapadan","San Isidro","San Juan","San Quintin","Tayum","Tineg","Tubo","Villaviciosa",
                                 "Bacacay","Camalig","Daraga (Locsin)","Guinobatan","Jovellar","Libon","Malilipot","Malinao","Manito","Oas","Pio Duran","Polangui","Rapu-Rapu",
@@ -355,10 +356,9 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         String description = etDescription.getText().toString();
         String bmy = brand + " " + model + " " + year;
         String location = address1 + " " + address2 +" " + city + " " + province;
-        int vehicleCount = 0;
 
-                Upload uploadModel = new Upload(address1,address2,city,postcode,province,year,brand,transmission,
-                drivetrain,seats,type,fuelType,mileage,model,plateNumber,priceRate,description,carUrl, bmy, location, vehicleCount);
+                CarHost carHost = new CarHost(address1,address2,city,postcode,province,year,brand,transmission,
+                drivetrain,seats,type,fuelType,mileage,model,plateNumber,priceRate,description,carUrl, bmy, location);
 
         FirebaseDatabase.getInstance(databaseLocation).getReference().child("users").child(userId)
                 .child("isHost").setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -373,7 +373,7 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         });
 
         FirebaseDatabase.getInstance(databaseLocation).getReference().child("vehicle").push().child(userId)
-                .setValue(uploadModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                .setValue(carHost).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Intent intent = new Intent(HostCar.this, Main.class);
