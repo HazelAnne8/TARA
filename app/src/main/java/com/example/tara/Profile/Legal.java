@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
 
 import com.example.tara.R;
 
@@ -14,6 +15,10 @@ public class Legal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_legal);
+
+        WebView webView=findViewById(R.id.webView);
+        webView.loadUrl("file:///android_asset/privacyPolicy.html");
+
         getSupportActionBar().hide();
         Toolbar toolbar =  findViewById(R.id.appBar);
 
