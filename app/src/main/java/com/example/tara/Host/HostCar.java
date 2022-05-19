@@ -44,7 +44,7 @@ import java.util.Locale;
 
 public class HostCar extends AppCompatActivity implements View.OnClickListener{
     ImageView ivCarGrant1,ivCarGrant2,ivCarGrant3,ivCarGrant4,ivRoadTax1,ivRoadTax2,ivRoadTax3,ivRoadTax4,ivInsurance1,ivInsurance2,ivInsurance3;
-    AutoCompleteTextView etYear, etBrand, etTransmission, etDrivetrain,etSeats, etType, etFuelType, etMileage,etCity, etProvince;
+    AutoCompleteTextView etYear, etBrand, etTransmission, etDrivetrain,etSeats, etType, etFuelType, etMileage,etCity, etProvince, etMunicipality;
     ImageView ivExterior1, ivExterior2,ivExterior3,ivExterior4,ivInterior1,ivInterior2,ivInterior3,ivInterior4;
     CardView cvGrant1,cvGrant2,cvGrant3,cvTax1,cvTax2,cvTax3,cvExterior1,cvExterior2,cvExterior3, cvInterior1,cvInterior2,cvInterior3,cvInsurance1, cvInsurance2;
     Uri exterior1Uri,exterior2Uri,exterior3Uri,exterior4Uri,interior1Uri,interior2Uri,interior3Uri,interior4Uri
@@ -196,6 +196,7 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         etCity = findViewById(R.id.etCity);
         etPostcode = findViewById(R.id.etPostcode);
         etProvince =findViewById(R.id.etProvince);
+        etMunicipality = findViewById(R.id.etMunicipality);
 
         yearItems = new ArrayAdapter<String>(this,R.layout.list_item, yearArr);
         brandItems = new ArrayAdapter<String>(this,R.layout.list_item, brandArr);
@@ -241,6 +242,8 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
 
         ArrayAdapter<String> cityAdapter = new ArrayAdapter<>(this,R.layout.list_item,cityArr);
         ArrayAdapter<String> provinceAdapter = new ArrayAdapter<>(this,R.layout.list_item,provinceArr);
+        ArrayAdapter<String> municipalityAdapter = new ArrayAdapter<>(this,R.layout.list_item,municipalityArr);
+        etMunicipality.setAdapter(cityAdapter);
         etCity.setAdapter(cityAdapter);
         etProvince.setAdapter(provinceAdapter);
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -335,9 +338,10 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         String description = etDescription.getText().toString();
         String bmy = brand + " " + model + " " + year;
         String location = address1 + " " + address2 +" " + city + " " + province;
+        String municipality = etMunicipality.getText().toString();
 
         CarHost carHost = new CarHost(address1,address2,city,postcode,province,year,brand,transmission,
-                drivetrain,seats,type,fuelType,mileage,model,plateNumber,priceRate,description, bmy, location);
+                drivetrain,seats,type,fuelType,mileage,model,plateNumber,priceRate,description, bmy, location,municipality);
 
         userReference.child(userId).child("isHost").setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

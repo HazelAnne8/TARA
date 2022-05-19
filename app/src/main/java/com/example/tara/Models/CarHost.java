@@ -4,7 +4,7 @@ import android.widget.TextView;
 
 public class CarHost {
     public String address1,address2,city,postcode,province,year,brand,transmission,drivetrain,seats,type,fuelType,mileage,model,plateNumber
-            ,insuranceUrl,priceRate,description,carUrl,bmy,location;
+            ,priceRate,description,bmy,location, municipality;
 
     public CarHost(){
 
@@ -12,7 +12,7 @@ public class CarHost {
     public CarHost(String address1, String address2, String city, String postcode, String province,
                    String year, String brand, String transmission, String drivetrain, String seats,
                    String type, String fuelType, String mileage, String model, String plateNumber,
-                   String priceRate, String description, String bmy, String location) {
+                   String priceRate, String description, String bmy, String location, String municipality) {
         this.address1 = address1;
         this.address2 = address2;
         this.city = city;
@@ -32,6 +32,7 @@ public class CarHost {
         this.description = description;
         this.bmy = bmy;
         this.location = location;
+        this.municipality = municipality;
     }
 }
 
