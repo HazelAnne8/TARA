@@ -107,11 +107,9 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
                                         Car car = dataSnapshot1.getValue(Car.class);
                                         list.add(car);
                                     }
-
                                 }
                                 myAdapter.notifyDataSetChanged();
                             }
-
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
 

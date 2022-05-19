@@ -28,7 +28,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -39,28 +43,21 @@ import java.util.Date;
 import java.util.Locale;
 
 public class HostCar extends AppCompatActivity implements View.OnClickListener{
-    private ImageView ivCarGrant1,ivCarGrant2,ivCarGrant3,ivCarGrant4,
-            ivRoadTax1,ivRoadTax2,ivRoadTax3,ivRoadTax4;
-    AutoCompleteTextView etYear, etBrand, etTransmission, etDrivetrain,
-            etSeats, etType, etFuelType, etMileage;
-    private ImageView ivExterior1, ivExterior2,ivExterior3,ivExterior4,
-            ivInterior1,ivInterior2,ivInterior3,ivInterior4;
-    private EditText etModel, etPlateNumber;
-    private CardView cvGrant1,cvGrant2,cvGrant3,cvTax1,cvTax2,cvTax3,cvExterior1,cvExterior2,cvExterior3,
-                        cvInterior1,cvInterior2,cvInterior3;
-    private String yearValue,brandValue,transmissionValue,drivetrainValue,seatsValue,typeValue,fuelTypeValue,
-            mileageValue;
+    ImageView ivCarGrant1,ivCarGrant2,ivCarGrant3,ivCarGrant4,ivRoadTax1,ivRoadTax2,ivRoadTax3,ivRoadTax4,ivInsurance1,ivInsurance2,ivInsurance3;
+    AutoCompleteTextView etYear, etBrand, etTransmission, etDrivetrain,etSeats, etType, etFuelType, etMileage,etCity, etProvince;
+    ImageView ivExterior1, ivExterior2,ivExterior3,ivExterior4,ivInterior1,ivInterior2,ivInterior3,ivInterior4;
+    CardView cvGrant1,cvGrant2,cvGrant3,cvTax1,cvTax2,cvTax3,cvExterior1,cvExterior2,cvExterior3, cvInterior1,cvInterior2,cvInterior3,cvInsurance1, cvInsurance2;
     Uri exterior1Uri,exterior2Uri,exterior3Uri,exterior4Uri,interior1Uri,interior2Uri,interior3Uri,interior4Uri
             ,insurance1Uri,insurance2Uri,insurance3Uri,carGrant1Uri,carGrant2Uri,carGrant3Uri,carGrant4Uri
             ,roadTax1Uri,roadTax2Uri,roadTax3Uri,roadTax4Uri;
-    EditText etPriceRate, etDescription;
-    EditText etAmount;
-    CardView cvInsurance1, cvInsurance2;
-    ImageView ivInsurance1,ivInsurance2,ivInsurance3;
-    private EditText etStreetName, etBrngy, etPostcode;
-    private AutoCompleteTextView  etCity, etProvince;
+    EditText etPriceRate, etDescription,etAmount, etStreetName, etBrngy, etPostcode,etModel, etPlateNumber;
+    DatabaseReference vehicleReference,userReference;
+    ArrayAdapter<String> yearItems, brandItems, transmissionItems, driveItems, seatItems, typeItems, fuelItems,mileageItems;
 
-    //all values, you can also put this on the string.xml para malinis tingnan
+    ArrayList<Uri> imageUri = new ArrayList<>(), exteriorUri = new ArrayList<>(),interiorUri = new ArrayList<>();
+    String yearValue,brandValue, transmissionValue,drivetrainValue,seatsValue,typeValue,fuelTypeValue,mileageValue,carId,userId;
+    String exterior1,exterior2,exterior3,exterior4,interior1,interior2,interior3,interior4;
+
     String[] yearArr =  {"2022","2021","2020","2019","2018","2017","2016","2015","2014","2013","2012","2011"};
     String[] brandArr = {"Toyota","Mitsubishi","Nisan","Hyundai","Ford","Suzuki","Honda"};
     String[] transmissionArr = {"Manual","Automatic","CVT"};
@@ -137,10 +134,6 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
                                 "Concepcion","Gerona","La Paz","Mayantoc","Moncada","Paniqui","Pura","Ramos","San Clemente","San Jose","San Manuel","Santa Ignacia","Victoria","Botolan","Cabangan",
                                 "Candelaria","Castillejos","Iba","Masinloc","Palauig","San Antonio","San Felipe","San Marcelino","San Narciso","Santa Cruz","Subic"};
 
-    ArrayAdapter<String> yearItems, brandItems, transmissionItems, driveItems, seatItems, typeItems,
-                        fuelItems,mileageItems;
-
-    ArrayList<Uri> imageUri = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,7 +151,6 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         ivRoadTax2 = findViewById(R.id.roadTax2);
         ivRoadTax3 = findViewById(R.id.roadTax3);
         ivRoadTax4 = findViewById(R.id.roadTax4);
-
         etYear = findViewById(R.id.etYear);
         etBrand = findViewById(R.id.etBrand);
         etModel = findViewById(R.id.etModel);
@@ -169,7 +161,6 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         etFuelType = findViewById(R.id.etFuelType);
         etMileage = findViewById(R.id.etMileage);
         etPlateNumber = findViewById(R.id.etPlateNumber);
-
         ivInterior1 = findViewById(R.id.carInterior1);
         ivInterior2 = findViewById(R.id.carInterior2);
         ivInterior3 = findViewById(R.id.carInterior3);
@@ -178,26 +169,33 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         ivExterior2 = findViewById(R.id.carExterior2);
         ivExterior3 = findViewById(R.id.carExterior3);
         ivExterior4 = findViewById(R.id.carExterior4);
-
         cvGrant1 = findViewById(R.id.cv1);
         cvGrant2 = findViewById(R.id.cv2);
         cvGrant3 = findViewById(R.id.cv3);
-
         cvTax1 = findViewById(R.id.cv4);
         cvTax2 = findViewById(R.id.cv5);
         cvTax3 = findViewById(R.id.cv6);
-
         cvExterior1 = findViewById(R.id.cvExterior1);
         cvExterior2 = findViewById(R.id.cvExterior2);
         cvExterior3 = findViewById(R.id.cvExterior3);
         cvInterior1 = findViewById(R.id.cvInterior1);
         cvInterior2 = findViewById(R.id.cvInterior2);
         cvInterior3 = findViewById(R.id.cvInterior3);
-
         etModel = findViewById(R.id.etModel);
         etPlateNumber = findViewById(R.id.etPlateNumber);
         etPriceRate=  findViewById(R.id.etPricing);
         etDescription = findViewById(R.id.etDescription);
+        etAmount= findViewById(R.id.etAmount);
+        cvInsurance1 = findViewById(R.id.cvInsurance1);
+        cvInsurance2 = findViewById(R.id.cvInsurance2);
+        ivInsurance1 = findViewById(R.id.ivInsurance1);
+        ivInsurance2 = findViewById(R.id.ivInsurance2);
+        ivInsurance3 = findViewById(R.id.ivInsurance3);
+        etStreetName = findViewById(R.id.etAddressLine1);
+        etBrngy = findViewById(R.id.etAddressLine2);
+        etCity = findViewById(R.id.etCity);
+        etPostcode = findViewById(R.id.etPostcode);
+        etProvince =findViewById(R.id.etProvince);
 
         yearItems = new ArrayAdapter<String>(this,R.layout.list_item, yearArr);
         brandItems = new ArrayAdapter<String>(this,R.layout.list_item, brandArr);
@@ -217,20 +215,7 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         etFuelType.setAdapter(fuelItems);
         etMileage.setAdapter(mileageItems);
 
-        etAmount= findViewById(R.id.etAmount);
-        cvInsurance1 = findViewById(R.id.cvInsurance1);
-        cvInsurance2 = findViewById(R.id.cvInsurance2);
-        ivInsurance1 = findViewById(R.id.ivInsurance1);
-        ivInsurance2 = findViewById(R.id.ivInsurance2);
-        ivInsurance3 = findViewById(R.id.ivInsurance3);
         RadioGroup radioGroup = findViewById(R.id.insuranceRadioGroup);
-
-        etStreetName = findViewById(R.id.etAddressLine1);
-        etBrngy = findViewById(R.id.etAddressLine2);
-        etCity = findViewById(R.id.etCity);
-        etPostcode = findViewById(R.id.etPostcode);
-        etProvince =findViewById(R.id.etProvince);
-
         RadioGroup protectionRadioGroup = findViewById(R.id.protectionRadioGroup);
         RadioGroup trackCarRadioGroup = findViewById(R.id.trackRadioGroup);
 
@@ -258,61 +243,47 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         ArrayAdapter<String> provinceAdapter = new ArrayAdapter<>(this,R.layout.list_item,provinceArr);
         etCity.setAdapter(cityAdapter);
         etProvince.setAdapter(provinceAdapter);
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         etYear.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                yearValue = parent.getItemAtPosition(position).toString();
-            }
+                yearValue = parent.getItemAtPosition(position).toString(); }
         });
-
         etBrand.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                brandValue = parent.getItemAtPosition(position).toString();
-            }
+                brandValue = parent.getItemAtPosition(position).toString(); }
         });
-
         etTransmission.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                transmissionValue = parent.getItemAtPosition(position).toString();
-            }
+                transmissionValue = parent.getItemAtPosition(position).toString(); }
         });
-
         etDrivetrain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                drivetrainValue = parent.getItemAtPosition(position).toString();
-            }
+                drivetrainValue = parent.getItemAtPosition(position).toString(); }
         });
-
         etSeats.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                seatsValue = parent.getItemAtPosition(position).toString();
-            }
+                seatsValue = parent.getItemAtPosition(position).toString(); }
         });
-
         etType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                typeValue = parent.getItemAtPosition(position).toString();
-            }
+                typeValue = parent.getItemAtPosition(position).toString(); }
         });
-
         etFuelType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                fuelTypeValue = parent.getItemAtPosition(position).toString();
-            }
+                fuelTypeValue = parent.getItemAtPosition(position).toString(); }
         });
-
         etMileage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mileageValue = parent.getItemAtPosition(position).toString();
-            }
+                mileageValue = parent.getItemAtPosition(position).toString(); }
         });
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -330,16 +301,21 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
                 etPlateNumber.getText().toString().equals("")){
                     Toast.makeText(HostCar.this,"Some of the fields are empty!",Toast.LENGTH_LONG).show();
                 }else {
+                    uploadData();
                     uploadImage("carImages/");
                 }
             }
         });
+
+        String databaseLocation = getString(R.string.databasePath);
+        vehicleReference = FirebaseDatabase.getInstance(databaseLocation).getReference("vehicle");
+        userReference = FirebaseDatabase.getInstance(databaseLocation).getReference("users");
+
+        //wait lang boss renz
+
     }
 
-    //upload data to database, from the name itself
-    private void uploadData(String carUrl){
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        String databaseLocation = getString(R.string.databasePath);
+    private void uploadData(){
         String address1 = etStreetName.getText().toString();
         String address2 = etBrngy.getText().toString();
         String city = etCity.getText().toString();
@@ -361,10 +337,9 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         String location = address1 + " " + address2 +" " + city + " " + province;
 
         CarHost carHost = new CarHost(address1,address2,city,postcode,province,year,brand,transmission,
-                drivetrain,seats,type,fuelType,mileage,model,plateNumber,priceRate,description,carUrl, bmy, location);
+                drivetrain,seats,type,fuelType,mileage,model,plateNumber,priceRate,description, bmy, location);
 
-        FirebaseDatabase.getInstance(databaseLocation).getReference().child("users").child(userId)
-                .child("isHost").setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
+        userReference.child(userId).child("isHost").setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
             }
@@ -375,7 +350,9 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
             }
         });
 
-        FirebaseDatabase.getInstance(databaseLocation).getReference().child("vehicle").push().child(userId)
+        carId = vehicleReference.push().getKey();
+        assert carId != null;
+        vehicleReference.child(carId).child(userId)
                 .setValue(carHost).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -396,56 +373,29 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
 
     //upload image to storage
     private void uploadImage(String fileLocation){
-        //filename format
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.CANADA);
         Date now = new Date();
         String fileName = formatter.format(now);
-
-        //gets the location of the storage
         StorageReference storageReference = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference(fileLocation+fileName);
 
-
-        for(int i = 0; i < imageUri.size(); i++){
-            storageReference.putFile(imageUri.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                        // gets the image url and store in the realtime database
-                        @Override
-                        public void onComplete(@NonNull Task<Uri> task) {
-                            String imageUrl = task.getResult().toString();
-                            uploadData(imageUrl);
-                        }
-                    });
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(HostCar.this, "Something occurred, please try again later",Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-
-
-        //stores the image
-//        storageReference.putFile(exterior1Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-//                    // gets the image url and store in the realtime database
-//                    @Override
-//                    public void onComplete(@NonNull Task<Uri> task) {
-//                        String imageUrl = task.getResult().toString();
-//                        uploadData(imageUrl);
-//                    }
-//                });
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Toast.makeText(HostCar.this, "Something occurred, please try again later",Toast.LENGTH_LONG).show();
-//            }
-//        });
+        storageReference.putFile(exterior1Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    // gets the image url and store in the realtime database
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        String carUrl = task.getResult().toString();
+                        vehicleReference.child(carId).child(userId).child("exterior1Url").setValue(carUrl);
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(HostCar.this, "Error: Images did not upload successfully.",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     //this method is executed when an image is selected
@@ -459,6 +409,7 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
             ivCarGrant1.setImageURI(carGrant1Uri);
             cvGrant1.setVisibility(View.VISIBLE);
             imageUri.add(carGrant1Uri);
+            Toast.makeText(getApplicationContext(),carGrant1Uri.toString(),Toast.LENGTH_LONG).show();
         }
         if(requestCode==2 && resultCode== -1 && data != null && data.getData() != null){
             carGrant2Uri = data.getData();
@@ -504,47 +455,47 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
             exterior1Uri = data.getData();
             ivExterior1.setImageURI(exterior1Uri);
             cvExterior1.setVisibility(View.VISIBLE);
-            imageUri.add(exterior1Uri);
+            exteriorUri.add(exterior1Uri);
         }
         if(requestCode==10 && resultCode== -1 && data != null && data.getData() != null){
             exterior2Uri = data.getData();
             ivExterior2.setImageURI(exterior2Uri);
             cvExterior2.setVisibility(View.VISIBLE);
-            imageUri.add(exterior2Uri);
+            exteriorUri.add(exterior2Uri);
         }
         if(requestCode==11 && resultCode== -1 && data != null && data.getData() != null){
             exterior3Uri = data.getData();
             ivExterior3.setImageURI(exterior3Uri);
             cvExterior3.setVisibility(View.VISIBLE);
-            imageUri.add(exterior3Uri);
+            exteriorUri.add(exterior3Uri);
         }
         if(requestCode==12 && resultCode== -1 && data != null && data.getData() != null){
             exterior4Uri = data.getData();
             ivExterior4.setImageURI(exterior4Uri);
-            imageUri.add(exterior4Uri);
+            exteriorUri.add(exterior4Uri);
         }
         if(requestCode==13 && resultCode== -1 && data != null && data.getData() != null){
             interior1Uri = data.getData();
             ivInterior1.setImageURI(interior1Uri);
             cvInterior1.setVisibility(View.VISIBLE);
-            imageUri.add(interior1Uri);
+            interiorUri.add(interior1Uri);
         }
         if(requestCode==14 && resultCode== -1 && data != null && data.getData() != null){
             interior2Uri = data.getData();
             ivInterior2.setImageURI(interior2Uri);
             cvInterior2.setVisibility(View.VISIBLE);
-            imageUri.add(interior2Uri);
+            interiorUri.add(interior2Uri);
         }
         if(requestCode==15 && resultCode== -1 && data != null && data.getData() != null){
             interior3Uri = data.getData();
             ivInterior3.setImageURI(interior3Uri);
             cvInterior3.setVisibility(View.VISIBLE);
-            imageUri.add(interior3Uri);
+            interiorUri.add(interior3Uri);
         }
         if(requestCode==16 && resultCode== -1 && data != null && data.getData() != null){
             interior4Uri = data.getData();
             ivInterior4.setImageURI(interior4Uri);
-            imageUri.add(interior4Uri);
+            interiorUri.add(interior4Uri);
         }
         if (requestCode == 17 && resultCode == -1 && data != null && data.getData() != null) {
             insurance1Uri = data.getData();
