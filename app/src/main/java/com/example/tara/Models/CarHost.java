@@ -12,7 +12,7 @@ public class CarHost {
     public CarHost(String address1, String address2, String city, String postcode, String province,
                    String year, String brand, String transmission, String drivetrain, String seats,
                    String type, String fuelType, String mileage, String model, String plateNumber,
-                   String priceRate, String description, String carUrl, String bmy, String location) {
+                   String priceRate, String description, String bmy, String location) {
         this.address1 = address1;
         this.address2 = address2;
         this.city = city;
@@ -28,10 +28,8 @@ public class CarHost {
         this.mileage = mileage;
         this.model = model;
         this.plateNumber = plateNumber;
-        this.insuranceUrl = insuranceUrl;
         this.priceRate = priceRate;
         this.description = description;
-        this.carUrl = carUrl;
         this.bmy = bmy;
         this.location = location;
     }

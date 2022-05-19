@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.denzcoskun.imageslider.ImageSlider;
@@ -25,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class CarDetails extends AppCompatActivity {
-    String carId,uId;
+    String carId,uId, carUrl;
     DatabaseReference vehicleRef,userRef;
     ImageSlider imageSlider;
     TextView tvBmy, tvLocation, tvPriceRate, tvTransmission, tvDrivetrain, tvSeats,
@@ -67,7 +68,7 @@ public class CarDetails extends AppCompatActivity {
         bookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Toast.makeText(getApplicationContext(),"Car has been booked successfully\n"+"Car Id booked: "+ carId+"\nUser id booked: "+uId,Toast.LENGTH_LONG).show();
             }
         });
 
@@ -85,6 +86,14 @@ public class CarDetails extends AppCompatActivity {
                 tvMileage.setText(snapshot.child("mileage").getValue().toString());
                 tvDescription.setText(snapshot.child("description").getValue().toString());
                 tvPriceRate2.setText(snapshot.child("priceRate").getValue().toString());
+
+                carUrl = snapshot.child("carUrl").getValue().toString();
+
+                slideModels.add(new SlideModel(carUrl,null));
+                slideModels.add(new SlideModel("https://thecinemaholic.com/wp-content/uploads/2021/01/nezuu-e1638963260523.jpg",null));
+                slideModels.add(new SlideModel("https://cdn.animenewsnetwork.com/thumbnails/crop900x350gIL/cms/preview-guide/183646/spy-3.jpg",null));
+
+                imageSlider.setImageList(slideModels, ScaleTypes.FIT);
             }
 
             @Override
@@ -109,12 +118,29 @@ public class CarDetails extends AppCompatActivity {
             }
         });
 
-
-        slideModels.add(new SlideModel("https://ichef.bbci.co.uk/news/976/cpsprodpb/F382/production/_123883326_852a3a31-69d7-4849-81c7-8087bf630251.jpg",null));
-        slideModels.add(new SlideModel("https://thecinemaholic.com/wp-content/uploads/2021/01/nezuu-e1638963260523.jpg",null));
-        slideModels.add(new SlideModel("https://cdn.animenewsnetwork.com/thumbnails/crop900x350gIL/cms/preview-guide/183646/spy-3.jpg",null));
-
-        imageSlider.setImageList(slideModels, ScaleTypes.FIT);
+        //
+//        vehicleRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                String exterior1 = snapshot.child("exterior1").getValue().toString();
+//                String exterior2 = snapshot.child("exterior2").getValue().toString();
+//                String exterior3 = snapshot.child("exterior3").getValue().toString();
+//                String exterior4 = snapshot.child("exterior4").getValue().toString();
+//                String interior1 = snapshot.child("interior1").getValue().toString();
+//                String interior2 = snapshot.child("interior2").getValue().toString();
+//                String interior3 = snapshot.child("interior3").getValue().toString();
+//                String interior4 = snapshot.child("interior4").getValue().toString();
+//
+//                slideModels.add(new SlideModel(exterior1,null));
+//                slideModels.add(new SlideModel(exterior2,null));
+//                slideModels.add(new SlideModel(exterior3,null));
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
