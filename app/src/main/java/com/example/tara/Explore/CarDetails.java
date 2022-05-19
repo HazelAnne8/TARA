@@ -26,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class CarDetails extends AppCompatActivity {
-    String carId,uId, carUrl;
+    String carId,uId;
     DatabaseReference vehicleRef,userRef;
     ImageSlider imageSlider;
     TextView tvBmy, tvLocation, tvPriceRate, tvTransmission, tvDrivetrain, tvSeats,
@@ -87,11 +87,37 @@ public class CarDetails extends AppCompatActivity {
                 tvDescription.setText(snapshot.child("description").getValue().toString());
                 tvPriceRate2.setText(snapshot.child("priceRate").getValue().toString());
 
-                carUrl = snapshot.child("exterior1Url").getValue().toString();
+                String exterior1Url = snapshot.child("exterior1Url").getValue().toString();
+                slideModels.add(new SlideModel(exterior1Url,null));
 
-                slideModels.add(new SlideModel(carUrl,null));
-                slideModels.add(new SlideModel("https://thecinemaholic.com/wp-content/uploads/2021/01/nezuu-e1638963260523.jpg",null));
-                slideModels.add(new SlideModel("https://cdn.animenewsnetwork.com/thumbnails/crop900x350gIL/cms/preview-guide/183646/spy-3.jpg",null));
+                if(snapshot.child("exterior2Url").exists()){
+                    String exterior2Url = snapshot.child("exterior2Url").getValue().toString();
+                    slideModels.add(new SlideModel(exterior2Url,null));
+                }
+                if(snapshot.child("exterior3Url").exists()){
+                    String exterior3Url = snapshot.child("exterior3Url").getValue().toString();
+                    slideModels.add(new SlideModel(exterior3Url,null));
+                }
+                if(snapshot.child("exterior4Url").exists()){
+                    String exterior4Url = snapshot.child("exterior4Url").getValue().toString();
+                    slideModels.add(new SlideModel(exterior4Url,null));
+                }
+
+                String interior1Url = snapshot.child("interior1Url").getValue().toString();
+                slideModels.add(new SlideModel(interior1Url,null));
+
+                if(snapshot.child("interior2Url").exists()){
+                    String interior2Url = snapshot.child("interior2Url").getValue().toString();
+                    slideModels.add(new SlideModel(interior2Url,null));
+                }
+                if(snapshot.child("interior3Url").exists()){
+                    String interior3Url = snapshot.child("interior3Url").getValue().toString();
+                    slideModels.add(new SlideModel(interior3Url,null));
+                }
+                if(snapshot.child("interior4Url").exists()){
+                    String interior4Url = snapshot.child("interior4Url").getValue().toString();
+                    slideModels.add(new SlideModel(interior4Url,null));
+                }
 
                 imageSlider.setImageList(slideModels, ScaleTypes.FIT);
             }
@@ -117,6 +143,8 @@ public class CarDetails extends AppCompatActivity {
 
             }
         });
+
+ //       (x : code here);
 
         //
 //        vehicleRef.addValueEventListener(new ValueEventListener() {

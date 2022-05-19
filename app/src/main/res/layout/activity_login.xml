@@ -38,6 +38,7 @@
         android:layout_marginTop="32dp"
         android:hint="Password"
         android:paddingLeft="10dp"
+        android:inputType="textPassword"
         android:background="@drawable/et_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
