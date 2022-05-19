@@ -54,7 +54,6 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
     DatabaseReference vehicleReference,userReference;
     ArrayAdapter<String> yearItems, brandItems, transmissionItems, driveItems, seatItems, typeItems, fuelItems,mileageItems;
 
-    ArrayList<Uri> imageUri = new ArrayList<>(), exteriorUri = new ArrayList<>(),interiorUri = new ArrayList<>();
     String yearValue,brandValue, transmissionValue,drivetrainValue,seatsValue,typeValue,fuelTypeValue,mileageValue,carId,userId;
     String exterior1,exterior2,exterior3,exterior4,interior1,interior2,interior3,interior4;
 
@@ -316,8 +315,6 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         vehicleReference = FirebaseDatabase.getInstance(databaseLocation).getReference("vehicle");
         userReference = FirebaseDatabase.getInstance(databaseLocation).getReference("users");
 
-        //wait lang boss renz
-
     }
 
     private void uploadData(){
@@ -382,7 +379,14 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.CANADA);
         Date now = new Date();
         String fileName = formatter.format(now);
-        StorageReference storageReference = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference(fileLocation+fileName);
+        StorageReference storageReference = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("exterior1Images/"+fileName);
+        StorageReference storageReference2 = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("exterior2Images/"+fileName);
+        StorageReference storageReference3 = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("exterior3Images/"+fileName);
+        StorageReference storageReference4 = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("exterior4Images/"+fileName);
+        StorageReference storageReference5 = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("interior1Images/"+fileName);
+        StorageReference storageReference6 = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("interior2Images/"+fileName);
+        StorageReference storageReference7 = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("interior3Images/"+fileName);
+        StorageReference storageReference8 = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("interior4Images/"+fileName);
 
         storageReference.putFile(exterior1Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -402,6 +406,152 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
                 Toast.makeText(HostCar.this, "Error: Images did not upload successfully.",Toast.LENGTH_LONG).show();
             }
         });
+
+        if(exterior2Uri!=null){
+            storageReference2.putFile(exterior2Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        // gets the image url and store in the realtime database
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            String carUrl = task.getResult().toString();
+                            vehicleReference.child(carId).child(userId).child("exterior2Url").setValue(carUrl);
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(HostCar.this, "Error: Images did not upload successfully.",Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+        if(exterior3Uri!=null){
+            storageReference3.putFile(exterior3Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        // gets the image url and store in the realtime database
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            String carUrl = task.getResult().toString();
+                            vehicleReference.child(carId).child(userId).child("exterior3Url").setValue(carUrl);
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(HostCar.this, "Error: Images did not upload successfully.",Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+        if(exterior4Uri!=null){
+            storageReference4.putFile(exterior4Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        // gets the image url and store in the realtime database
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            String carUrl = task.getResult().toString();
+                            vehicleReference.child(carId).child(userId).child("exterior4Url").setValue(carUrl);
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(HostCar.this, "Error: Images did not upload successfully.",Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+        storageReference5.putFile(interior1Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    // gets the image url and store in the realtime database
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        String carUrl = task.getResult().toString();
+                        vehicleReference.child(carId).child(userId).child("interior1Url").setValue(carUrl);
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(HostCar.this, "Error: Images did not upload successfully.",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        if(interior2Uri!=null){
+            storageReference6.putFile(interior2Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        // gets the image url and store in the realtime database
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            String carUrl = task.getResult().toString();
+                            vehicleReference.child(carId).child(userId).child("interior2Url").setValue(carUrl);
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(HostCar.this, "Error: Images did not upload successfully.",Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+        if(interior3Uri!=null){
+            storageReference7.putFile(interior3Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        // gets the image url and store in the realtime database
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            String carUrl = task.getResult().toString();
+                            vehicleReference.child(carId).child(userId).child("interior3Url").setValue(carUrl);
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(HostCar.this, "Error: Images did not upload successfully.",Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+        if(interior4Uri!=null){
+            storageReference8.putFile(interior4Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        // gets the image url and store in the realtime database
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            String carUrl = task.getResult().toString();
+                            vehicleReference.child(carId).child(userId).child("interior4Url").setValue(carUrl);
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(HostCar.this, "Error: Images did not upload successfully.",Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
     }
 
     //this method is executed when an image is selected
@@ -414,111 +564,92 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
             carGrant1Uri = data.getData();
             ivCarGrant1.setImageURI(carGrant1Uri);
             cvGrant1.setVisibility(View.VISIBLE);
-            imageUri.add(carGrant1Uri);
             Toast.makeText(getApplicationContext(),carGrant1Uri.toString(),Toast.LENGTH_LONG).show();
         }
         if(requestCode==2 && resultCode== -1 && data != null && data.getData() != null){
             carGrant2Uri = data.getData();
             ivCarGrant2.setImageURI(carGrant2Uri);
             cvGrant2.setVisibility(View.VISIBLE);
-            imageUri.add(carGrant4Uri);
         }
         if(requestCode==3 && resultCode== -1 && data != null && data.getData() != null){
             carGrant3Uri = data.getData();
             ivCarGrant3.setImageURI(carGrant3Uri);
             cvGrant3.setVisibility(View.VISIBLE);
-            imageUri.add(carGrant4Uri);
         }
         if(requestCode==4 && resultCode== -1 && data != null && data.getData() != null){
             carGrant4Uri = data.getData();
             ivCarGrant4.setImageURI(carGrant4Uri);
-            imageUri.add(carGrant4Uri);
         }
         if(requestCode==5 && resultCode== -1 && data != null && data.getData() != null){
             roadTax1Uri = data.getData();
             ivRoadTax1.setImageURI(roadTax1Uri);
             cvTax1.setVisibility(View.VISIBLE);
-            imageUri.add(roadTax1Uri);
         }
         if(requestCode==6 && resultCode== -1 && data != null && data.getData() != null){
             roadTax2Uri = data.getData();
             ivRoadTax2.setImageURI(roadTax2Uri);
             cvTax2.setVisibility(View.VISIBLE);
-            imageUri.add(roadTax2Uri);
         }
         if(requestCode==7 && resultCode== -1 && data != null && data.getData() != null){
             roadTax3Uri = data.getData();
             ivRoadTax3.setImageURI(roadTax3Uri);
             cvTax3.setVisibility(View.VISIBLE);
-            imageUri.add(roadTax3Uri);
         }
         if(requestCode==8 && resultCode== -1 && data != null && data.getData() != null){
             roadTax4Uri = data.getData();
             ivRoadTax4.setImageURI(roadTax4Uri);
-            imageUri.add(roadTax4Uri);
         }
         if(requestCode==9 && resultCode== -1 && data != null && data.getData() != null){
             exterior1Uri = data.getData();
             ivExterior1.setImageURI(exterior1Uri);
             cvExterior1.setVisibility(View.VISIBLE);
-            exteriorUri.add(exterior1Uri);
         }
         if(requestCode==10 && resultCode== -1 && data != null && data.getData() != null){
             exterior2Uri = data.getData();
             ivExterior2.setImageURI(exterior2Uri);
             cvExterior2.setVisibility(View.VISIBLE);
-            exteriorUri.add(exterior2Uri);
         }
         if(requestCode==11 && resultCode== -1 && data != null && data.getData() != null){
             exterior3Uri = data.getData();
             ivExterior3.setImageURI(exterior3Uri);
             cvExterior3.setVisibility(View.VISIBLE);
-            exteriorUri.add(exterior3Uri);
         }
         if(requestCode==12 && resultCode== -1 && data != null && data.getData() != null){
             exterior4Uri = data.getData();
             ivExterior4.setImageURI(exterior4Uri);
-            exteriorUri.add(exterior4Uri);
         }
         if(requestCode==13 && resultCode== -1 && data != null && data.getData() != null){
             interior1Uri = data.getData();
             ivInterior1.setImageURI(interior1Uri);
             cvInterior1.setVisibility(View.VISIBLE);
-            interiorUri.add(interior1Uri);
         }
         if(requestCode==14 && resultCode== -1 && data != null && data.getData() != null){
             interior2Uri = data.getData();
             ivInterior2.setImageURI(interior2Uri);
             cvInterior2.setVisibility(View.VISIBLE);
-            interiorUri.add(interior2Uri);
         }
         if(requestCode==15 && resultCode== -1 && data != null && data.getData() != null){
             interior3Uri = data.getData();
             ivInterior3.setImageURI(interior3Uri);
             cvInterior3.setVisibility(View.VISIBLE);
-            interiorUri.add(interior3Uri);
         }
         if(requestCode==16 && resultCode== -1 && data != null && data.getData() != null){
             interior4Uri = data.getData();
             ivInterior4.setImageURI(interior4Uri);
-            interiorUri.add(interior4Uri);
         }
         if (requestCode == 17 && resultCode == -1 && data != null && data.getData() != null) {
             insurance1Uri = data.getData();
             ivInsurance1.setImageURI(insurance1Uri);
             cvInsurance1.setVisibility(View.VISIBLE);
-            imageUri.add(insurance1Uri);
         }
         if (requestCode == 18 && resultCode == -1 && data != null && data.getData() != null) {
             insurance2Uri = data.getData();
             ivInsurance2.setImageURI(insurance2Uri);
             cvInsurance2.setVisibility(View.VISIBLE);
-            imageUri.add(insurance2Uri);
         }
         if (requestCode == 19 && resultCode == -1 && data != null && data.getData() != null) {
             insurance3Uri = data.getData();
             ivInsurance3.setImageURI(interior3Uri);
-            imageUri.add(insurance3Uri);
         }
     }
 

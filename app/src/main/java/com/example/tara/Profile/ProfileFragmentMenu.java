@@ -145,7 +145,7 @@ public class ProfileFragmentMenu extends Fragment {
                 if(user!=null){
                     if(!user.imageUrl.isEmpty()){
                         Uri imageUri = Uri.parse(user.imageUrl);
-                        Glide.with(getActivity()).load(imageUri).into(ivPhoto);
+                        Glide.with(getContext()).load(imageUri).into(ivPhoto);
                     }
                     else
                         ivPhoto.setImageResource(R.drawable.ic_profile_image);
@@ -159,7 +159,6 @@ public class ProfileFragmentMenu extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
 
         return view;
     }
