@@ -87,7 +87,7 @@ public class CarDetails extends AppCompatActivity {
                 tvDescription.setText(snapshot.child("description").getValue().toString());
                 tvPriceRate2.setText(snapshot.child("priceRate").getValue().toString());
 
-                carUrl = snapshot.child("carUrl").getValue().toString();
+                carUrl = snapshot.child("exterior1Url").getValue().toString();
 
                 slideModels.add(new SlideModel(carUrl,null));
                 slideModels.add(new SlideModel("https://thecinemaholic.com/wp-content/uploads/2021/01/nezuu-e1638963260523.jpg",null));

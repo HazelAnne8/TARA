@@ -243,10 +243,11 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         ArrayAdapter<String> cityAdapter = new ArrayAdapter<>(this,R.layout.list_item,cityArr);
         ArrayAdapter<String> provinceAdapter = new ArrayAdapter<>(this,R.layout.list_item,provinceArr);
         ArrayAdapter<String> municipalityAdapter = new ArrayAdapter<>(this,R.layout.list_item,municipalityArr);
+
         etMunicipality.setAdapter(municipalityAdapter);
         etCity.setAdapter(cityAdapter);
         etProvince.setAdapter(provinceAdapter);
-        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
 
         etYear.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -310,6 +311,7 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
             }
         });
 
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String databaseLocation = getString(R.string.databasePath);
         vehicleReference = FirebaseDatabase.getInstance(databaseLocation).getReference("vehicle");
         userReference = FirebaseDatabase.getInstance(databaseLocation).getReference("users");
