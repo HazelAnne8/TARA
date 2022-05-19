@@ -316,7 +316,6 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         userReference = FirebaseDatabase.getInstance(databaseLocation).getReference("users");
 
     }
-
     private void uploadData(){
         String address1 = etStreetName.getText().toString();
         String address2 = etBrngy.getText().toString();
@@ -379,14 +378,15 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.CANADA);
         Date now = new Date();
         String fileName = formatter.format(now);
-        StorageReference storageReference = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("exterior1Images/"+fileName);
-        StorageReference storageReference2 = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("exterior2Images/"+fileName);
-        StorageReference storageReference3 = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("exterior3Images/"+fileName);
-        StorageReference storageReference4 = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("exterior4Images/"+fileName);
-        StorageReference storageReference5 = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("interior1Images/"+fileName);
-        StorageReference storageReference6 = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("interior2Images/"+fileName);
-        StorageReference storageReference7 = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("interior3Images/"+fileName);
-        StorageReference storageReference8 = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com").getReference("interior4Images/"+fileName);
+        FirebaseStorage ref = FirebaseStorage.getInstance("gs://tara-f89da.appspot.com");
+        StorageReference storageReference = ref.getReference("exterior1Images/"+fileName);
+        StorageReference storageReference2 = ref.getReference("exterior2Images/"+fileName);
+        StorageReference storageReference3 = ref.getReference("exterior3Images/"+fileName);
+        StorageReference storageReference4 = ref.getReference("exterior4Images/"+fileName);
+        StorageReference storageReference5 = ref.getReference("interior1Images/"+fileName);
+        StorageReference storageReference6 = ref.getReference("interior2Images/"+fileName);
+        StorageReference storageReference7 = ref.getReference("interior3Images/"+fileName);
+        StorageReference storageReference8 = ref.getReference("interior4Images/"+fileName);
 
         storageReference.putFile(exterior1Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override

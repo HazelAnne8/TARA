@@ -144,32 +144,6 @@ public class CarDetails extends AppCompatActivity {
             }
         });
 
- //       (x : code here);
-
-        //
-//        vehicleRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                String exterior1 = snapshot.child("exterior1").getValue().toString();
-//                String exterior2 = snapshot.child("exterior2").getValue().toString();
-//                String exterior3 = snapshot.child("exterior3").getValue().toString();
-//                String exterior4 = snapshot.child("exterior4").getValue().toString();
-//                String interior1 = snapshot.child("interior1").getValue().toString();
-//                String interior2 = snapshot.child("interior2").getValue().toString();
-//                String interior3 = snapshot.child("interior3").getValue().toString();
-//                String interior4 = snapshot.child("interior4").getValue().toString();
-//
-//                slideModels.add(new SlideModel(exterior1,null));
-//                slideModels.add(new SlideModel(exterior2,null));
-//                slideModels.add(new SlideModel(exterior3,null));
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
