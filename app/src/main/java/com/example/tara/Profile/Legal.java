@@ -16,7 +16,7 @@ public class Legal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_legal);
 
-        WebView webView=findViewById(R.id.webView);
+        WebView webView=findViewById(R.id.webViewLegal);
         webView.loadUrl("file:///android_asset/privacyPolicy.html");
 
         getSupportActionBar().hide();

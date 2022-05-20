@@ -34,7 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ProfileFragmentMenu extends Fragment {
 
-    private TextView tvAccount,logoutBtn,tvUserName, tvTransactionHistory, tvTaxInformation, tvHowTaraWorks, tvContactSupport, tvLegal;
+    private TextView tvAccount,logoutBtn,tvUserName, tvTransactionHistory, tvTaxInformation, tvAboutTara, tvHowTaraWorks, tvContactSupport, tvLegal;
     private ImageView ivPhoto;
     GoogleSignInAccount signInAccount;
     String databaseLocation;
@@ -50,6 +50,7 @@ public class ProfileFragmentMenu extends Fragment {
 
         tvLegal = view.findViewById(R.id.legalBtn);
         tvContactSupport = view.findViewById(R.id.contactSupportBtn);
+        tvAboutTara = view.findViewById(R.id.aboutTaraBtn);
         tvHowTaraWorks = view.findViewById(R.id.howItWorksBtn);
         tvTaxInformation = view.findViewById(R.id.taxInfoBtn);
         tvTransactionHistory = view.findViewById(R.id.transacHistoryBtn);
@@ -96,6 +97,13 @@ public class ProfileFragmentMenu extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), TaxInformation.class));
+            }
+        });
+
+        tvAboutTara.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), AboutTara.class));
             }
         });
 

@@ -100,17 +100,17 @@
                 app:drawableLeftCompat="@drawable/ic_tax_info" />
 
             <TextView
-                android:id="@+id/favoritesBtn"
+                android:id="@+id/aboutTaraBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Favorites"
+                android:text="About TARA"
                 android:textSize="17sp"
                 android:textColor="@color/black"
                 android:paddingLeft="30dp"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
                 android:drawablePadding="10dp"
-                app:drawableLeftCompat="@drawable/ic_favorites" />
+                app:drawableLeftCompat="@drawable/ic_about_tara" />
 
             <TextView
                 android:id="@+id/howItWorksBtn"
