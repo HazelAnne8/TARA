@@ -15,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TARA">
         <activity
+            android:name=".Main.ReceiptActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Main.PaymentActivity"
+            android:exported="false" />
+        <activity
             android:name=".Host.EditHostCar"
             android:exported="false" />
         <activity
