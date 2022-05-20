@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width'>
+    <style>
+
+    @import url ('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+    .container{
+        width: 100%;
+        margin: 10px auto;
+    }
+    .carousel{
+        border: 2px solid #ccc;
+        height: 400px;
+        position: relative;
+        overflow: hidden;
+    }
+    .slider{
+        height: 100px;
+        display: flex;
+        width: 200%;
+<!--        border: 1px solid red;-->
+        transition: all 0.3s;
+    }
+    .slider section{
+        flex-basis: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .controls .arrow{
+        position: absolute;
+        top: 60%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+     .controls .arrow material-icons{
+        font-size: 60px;
+    }
+    .arrow.left{
+        left: 10px;
+    }
+    .arrow.right{
+        right: 10px;
+    }
+    .controls ul {
+        position: absolute;
+        bottomL 20px;
+        left: 50%;
+        transform: translate(-50%);
+        list-style: none;
+        display: flex;
+        padding: 0;
+        margin: 0;
+    }
+    .controls ul li {
+        width: 14px;
+        height: 14px;
+        border: 2px solid #333;
+        border-radius: 50px;
+        margin: 10px;
+        background: #333;
+        cursor: pointer;
+    }
+    .controls ul li.selected {
+        background: transparent;
+
+    }
+
+
+    </style>
+</head>
+
+<body>
+
+<br><br><br><br><br><br>
+<div class="container">
+    <div class="carousel">
+        <div class="slider">
+            <section>Renting
+               <br><br> <br><br> <br><br>
+                <p>1.Sign Up - Easy and fast verification to gain access to the TARA vehicle sharing community; just make sure to enter all the required information.
+                    2. Search and book - Find the vehicle of your choice by using our search filter.
+                    3.Get the vehicle - Meet the Host or have it delivered to you
+                    4.TARA safe and have fun! - Cruise to your dreams in style under TARA’s protection
+                </p>
+            </section>
+            <section>Sharing
+            <br><br> <br><br> <br><br>
+                <p>1.Sign Up - Easy and fast verification to gain access to the TARA vehicle sharing community; just make sure to enter all the required information.
+                    2.Share your car – Upload basic details of your car to start sharing
+                    3.Personalize sharing preferences - Customize your vehicle’s availability, delivery options, etc.
+                    4.Sit back and start earning - Earn extra income and make your vehicle pay for itself
+                </p>
+            </section>
+
+        </div>
+    <div class = "controls">
+
+        <span class="arrow left">
+            <span class = "material-icons"><img src="images/arrow_left.png" alt="arrow_left"></span>
+
+        </span>
+        <span class="arrow right">
+            <span class = "material-icons"><img src="images/arrow-right.png" alt="arrow_right"></span>
+        </span>
+    </div>
+</div>
+</div>
+<script>
+    const slider = document.querySelector('.slider');
+    const leftArrow = document.querySelector('.left');
+    const rightArrow = document.querySelector('.right');
+
+    var sectionIndex = 0;
+
+    document.querySelectorAll('.controls li').forEach(function(indicator, ind){
+        indicator.addEventListener('click', function(){
+        sectionIndex = ind;
+        document.querySelector('.controls .selected').classList.remove('selected');
+        indicator.classList.add('selected');
+        slider.style.transform = 'translate('+ (sectionIndex) * -50 + '%)';
+
+        });
+
+    });
+
+    leftArrow.addEventListener('click', function(){
+        sectionIndex = (sectionIndex > 0) ? sectionIndex - 1 : 0;
+        slider.style.transform = 'translate('+ (sectionIndex) * -50 + '%)';
+    });
+
+    rightArrow.addEventListener('click', function(){
+        sectionIndex = (sectionIndex < 1) ? sectionIndex + 1 : 1
+        slider.style.transform = 'translate('+ (sectionIndex) * -50 + '%)';
+    });
+
+</script>
+</body>
+
+</html>

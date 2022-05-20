@@ -27,6 +27,9 @@
             android:name=".Profile.ContactSupport"
             android:exported="false" />
         <activity
+            android:name=".Profile.AboutTara"
+            android:exported="false" />
+        <activity
             android:name=".Profile.HowTaraWorks"
             android:exported="false" />
         <activity
