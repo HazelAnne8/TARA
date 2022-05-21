@@ -71,6 +71,7 @@ public class CarDetails extends AppCompatActivity {
             public void onClick(View view) {
                Intent intent = new Intent(CarDetails.this, PaymentActivity.class);
                intent.putExtra("price",price);
+               intent.putExtra("carId", carId);
                startActivity(intent);
             }
         });
@@ -138,7 +139,7 @@ public class CarDetails extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(!(snapshot.child("imageUrl").getValue().toString().isEmpty())){
                     String imageUrl = snapshot.child("imageUrl").getValue().toString();
-                    Glide.with(CarDetails.this).load(imageUrl).into(hostPic);
+                    Glide.with(getApplicationContext()).load(imageUrl).into(hostPic);
                 }
                 hostName.setText(capitalizeWord(snapshot.child("name").getValue().toString()));
             }
