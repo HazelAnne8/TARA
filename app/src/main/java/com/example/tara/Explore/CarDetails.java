@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.tara.Main.PaymentActivity;
 import com.example.tara.Profile.EditProfile;
 import com.example.tara.R;
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class CarDetails extends AppCompatActivity {
-    String carId,uId;
+    String carId,uId,price;
     DatabaseReference vehicleRef,userRef;
     ImageSlider imageSlider;
     TextView tvBmy, tvLocation, tvPriceRate, tvTransmission, tvDrivetrain, tvSeats,
@@ -65,16 +67,21 @@ public class CarDetails extends AppCompatActivity {
         vehicleRef = FirebaseDatabase.getInstance(databaseLocation).getReference("vehicle").child(carId).child(uId);
         userRef = FirebaseDatabase.getInstance(databaseLocation).getReference("users").child(uId);
 
+
         bookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Car has been booked successfully\n"+"Car Id booked: "+ carId+"\nUser id booked: "+uId,Toast.LENGTH_LONG).show();
+               Intent intent = new Intent(CarDetails.this, PaymentActivity.class);
+               intent.putExtra("price",price);
+               startActivity(intent);
             }
         });
 
         vehicleRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dataSnapshot = snapshot;
+                price = snapshot.child("priceRate").getValue().toString();
                 tvBmy.setText(snapshot.child("bmy").getValue().toString());
                 tvLocation.setText(snapshot.child("location").getValue().toString());
                 tvPriceRate.setText(snapshot.child("priceRate").getValue().toString());
