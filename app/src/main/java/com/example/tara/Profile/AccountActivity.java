@@ -90,6 +90,7 @@ public class AccountActivity extends AppCompatActivity {
             public void onClick(View view) {
                 selectImage();
             }
+            //Select image
 
             private void selectImage() {
                 Intent galleryIntent = new Intent();
