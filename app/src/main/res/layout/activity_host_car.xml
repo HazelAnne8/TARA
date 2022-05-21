@@ -753,6 +753,7 @@
 
                 <EditText
                     android:id="@+id/etPlateNumber"
+                    android:inputType="textCapCharacters"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"

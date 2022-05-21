@@ -58,7 +58,12 @@ public class HostCar extends AppCompatActivity implements View.OnClickListener{
     String exterior1,exterior2,exterior3,exterior4,interior1,interior2,interior3,interior4;
 
     String[] yearArr =  {"2022","2021","2020","2019","2018","2017","2016","2015","2014","2013","2012","2011"};
-    String[] brandArr = {"Toyota","Mitsubishi","Nisan","Hyundai","Ford","Suzuki","Honda"};
+    String[] brandArr = {"Abarth","Alfa Romeo","Aston Martin","Audi","BAIC","Bentley","BMW","BYD","Changan","Changhe",
+                         "Chery","Chevrolet","Chrysler","Dodge","FAW","Ferrari","Fiat","Ford","Foton","GAC",
+                         "GAZ","Geely","Great Wall","Haima","Honda","Hyundai","Isuzu","JAC","Jaguar","Jeep",
+                         "JMC","Kaicene","Kia","King Long","Lamborghini","Land Rover","Lexus","Lifan","Lotus","Mahindra",
+                         "Maserati","Maxus","Mazda","Mercedes-Benz","MG","MINI","Mitsubishi","Morgan","Nissan","Peugeot",
+                         "Porsche","RAM","Rolls-Royce","SsangYong","Subaru","Suzuki","Tata","Toyota","Volkswagen","Volvo"};
     String[] transmissionArr = {"Manual","Automatic","CVT"};
     String[] drivetrainArr = {"AWD","4WD","FWD","RWD"};
     String[] seatArr = {"2 Seater","3 Seater","4 Seater","5 Seater","6 Seater"};
