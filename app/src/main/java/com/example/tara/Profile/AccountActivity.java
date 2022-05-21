@@ -5,18 +5,22 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.tara.LoginRegistration.LoginActivity;
 import com.example.tara.Models.User;
 import com.example.tara.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -51,8 +55,10 @@ public class AccountActivity extends AppCompatActivity {
     StorageReference storageReference;
     DatabaseReference Databasereference;
     String databaseLocation;
-    Toolbar toolbar;
     Uri imageUri;
+    FirebaseUser currentUser;
+    TextView resetPasswordAccount;
+    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,13 +77,56 @@ public class AccountActivity extends AppCompatActivity {
         ivEditPhoto = findViewById(R.id.editPhoto);
         tvEditName = findViewById(R.id.editName);
         saveChangesBtn = findViewById(R.id.saveChangesBtn);
+        resetPasswordAccount = findViewById(R.id.resetPasswordLocal);
         signInAccount = GoogleSignIn.getLastSignedInAccount(this);
 
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = auth.getCurrentUser();
+        auth = FirebaseAuth.getInstance();
+        currentUser = auth.getCurrentUser();
         FirebaseDatabase database = FirebaseDatabase.getInstance(databaseLocation);
         Databasereference = database.getReference("users").child(currentUser.getUid());
+
+
+        resetPasswordAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText resetMail = new EditText(view.getContext());
+                AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(view.getContext());
+                passwordResetDialog.setTitle("Reset Password?");
+                passwordResetDialog.setMessage("Enter Your Email To Received Reset Link.");
+                passwordResetDialog.setView(resetMail);
+
+                passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //extract the email link
+                        String mail = resetMail.getText().toString();
+                        auth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(AccountActivity.this, "Reset Link Sent to Your Email.", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(AccountActivity.this,  "This Account is not yet Registered", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    }
+                });
+                passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+
+                passwordResetDialog.create().show();
+            }
+        });
+
+
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +149,7 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
-        if( signInAccount != null){
+        if (signInAccount != null) {
             tvName.setText(signInAccount.getDisplayName());
             tvEmail.setText(signInAccount.getEmail());
         }
@@ -109,14 +158,13 @@ public class AccountActivity extends AppCompatActivity {
         Databasereference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user =  snapshot.getValue(User.class);
-                if(user!=null){
+                User user = snapshot.getValue(User.class);
+                if (user != null) {
                     //display user info
                     tvName.setText(user.name);
                     tvEmail.setText(user.email);
-                }
-                else{
-                    Toast.makeText(AccountActivity.this,"Error retrieving info",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(AccountActivity.this, "Error retrieving info", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -126,6 +174,8 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
 
         @Override

@@ -3,6 +3,8 @@ package com.example.tara.LoginRegistration;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -21,6 +23,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -39,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
     private GoogleSignInClient mGoogleSignInClient;
+    TextView forgotTextLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn = findViewById(R.id.loginBtn);
         loginGoogle = findViewById(R.id.loginGoogle);
         dontHaveAcc = findViewById(R.id.dontHaveAcc);
+        forgotTextLink = findViewById(R.id.forgotPassword);
         mAuth = FirebaseAuth.getInstance();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -85,6 +91,45 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(LoginActivity.this,SignupActivity.class));
                 finish();
+            }
+        });
+
+        forgotTextLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText resetMail = new EditText(view.getContext());
+                AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(view.getContext());
+                passwordResetDialog.setTitle("Reset Password?");
+                passwordResetDialog.setMessage("Enter Your Email To Received Reset Link.");
+                passwordResetDialog.setView(resetMail);
+
+                passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //extract the email link
+                        String mail = resetMail.getText().toString();
+                        mAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(LoginActivity.this, "Reset Link Sent to Your Email.", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(LoginActivity.this, "This Account is not yet Registered", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    }
+                });
+                passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+
+                passwordResetDialog.create().show();
             }
         });
 

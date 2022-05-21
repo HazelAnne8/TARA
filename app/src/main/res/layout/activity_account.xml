@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Edit User Name"
+        android:text="Edit Avatar"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/cardView"
         app:layout_constraintHorizontal_bias="0.487"
@@ -89,7 +89,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accountEmail"/>
+        app:layout_constraintTop_toBottomOf="@+id/accountEmail" />
 
 
     <TextView
@@ -133,27 +133,16 @@
     </LinearLayout>
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="25sp"
-        android:text="Password"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accountPassword" />
-
     <LinearLayout
         android:id="@+id/accountEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/saveChangesBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accountUserName"
-        app:layout_constraintVertical_bias="0.028">
+        app:layout_constraintTop_toBottomOf="@+id/accountUserName">
 
         <TextView
             android:layout_width="100dp"
@@ -171,6 +160,36 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp"
             android:text="User Email" />
+
+
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/resetPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/accountPassword">
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="25sp"
+            android:text="Password"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/resetPasswordLocal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:text="Click To Reset Password" />
+
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

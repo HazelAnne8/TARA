@@ -128,12 +128,7 @@ public class ProfileFragmentMenu extends Fragment {
             }
         });
 
-        profileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), EditProfile.class));
-            }
-        });
+
 
         //if gmail account is signed in
         if(signInAccount != null){

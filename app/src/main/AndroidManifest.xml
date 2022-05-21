@@ -51,9 +51,6 @@
             android:name=".Host.HostCar"
             android:exported="false" />
         <activity
-            android:name=".Profile.EditProfile"
-            android:exported="false" />
-        <activity
             android:name=".LoginRegistration.SignupActivity"
             android:exported="false" />
         <activity
