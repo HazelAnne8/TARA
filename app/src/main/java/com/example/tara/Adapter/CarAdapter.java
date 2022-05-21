@@ -16,7 +16,6 @@ import com.bumptech.glide.Glide;
 import com.example.tara.Main.RecyclerViewInterface;
 import com.example.tara.Models.Car;
 import com.example.tara.R;
-import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 
@@ -48,10 +47,13 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Car car = list.get(position);
-        holder.bmy.setText(car.getBmy());
-        holder.city.setText(car.getLocation());
-        holder.price.setText(car.getPriceRate());
-        Glide.with(holder.img.getContext()).load(car.getCarUrl()).into(holder.img);
+        if(car!=null){
+            holder.bindCar(car);
+        }
+//        holder.bmy.setText(car.getBmy());
+//        holder.city.setText(car.getLocation());
+//        holder.price.setText(car.getPriceRate());
+//        Glide.with(holder.img.getContext()).load(car.getCarUrl()).into(holder.img);
     }
 
     @Override
@@ -62,6 +64,13 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder>{
     public static class MyViewHolder extends  RecyclerView.ViewHolder{
         ImageView img;
         TextView bmy, city , price;
+
+        void bindCar(Car car) {
+            bmy.setText(car.getBmy());
+            city.setText(car.getLocation());
+            price.setText(car.getPriceRate());
+            Glide.with(img.getContext()).load(car.getCarUrl()).into(img);
+        }
 
         public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);

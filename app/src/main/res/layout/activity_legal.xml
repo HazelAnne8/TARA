@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grayish_blue1"
     tools:context=".Profile.Legal">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -26,7 +27,8 @@
     <WebView
         android:id="@+id/webViewLegal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/grayish_blue1"/>
 
 <!--    <TextView-->
 <!--        android:id="@+id/textView20"-->

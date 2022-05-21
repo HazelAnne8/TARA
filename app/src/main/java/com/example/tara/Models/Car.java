@@ -33,4 +33,24 @@ public class Car  {
     public String getUserId() {
         return userId;
     }
+
+    public void setExterior1Url(String exterior1Url) {
+        this.exterior1Url = exterior1Url;
+    }
+
+    public void setBmy(String bmy) {
+        this.bmy = bmy;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setPriceRate(String priceRate) {
+        this.priceRate = priceRate;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }

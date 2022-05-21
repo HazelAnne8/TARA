@@ -22,6 +22,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
     DataSnapshot dataSnapshot;
     SearchView searchView;
     Boolean isFiltered;
+    Query query;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,7 +50,7 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
         String databaseLocation = getString(R.string.databasePath);
         isFiltered = false;
         recyclerView = view.findViewById(R.id.carListRV);
-        database = FirebaseDatabase.getInstance(databaseLocation).getReference("vehicle");
+        query = FirebaseDatabase.getInstance(databaseLocation).getReference("vehicle");
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         list = new ArrayList<>();
 
@@ -74,7 +76,8 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
         myAdapter = new CarAdapter(getContext(),list,this);
         recyclerView.setAdapter(myAdapter);
 
-        database.addValueEventListener(new ValueEventListener() {
+
+        query.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -100,7 +103,7 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        database.addValueEventListener(new ValueEventListener() {
+                        query.addValueEventListener(new ValueEventListener() {
                             @SuppressLint("NotifyDataSetChanged")
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -126,7 +129,7 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
     private void filterList(String newText) {
         filteredList = new ArrayList<>();
 
-        database.addValueEventListener(new ValueEventListener() {
+        query.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
