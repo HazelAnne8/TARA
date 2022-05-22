@@ -450,6 +450,7 @@
                         android:layout_marginLeft="50dp"
                         android:layout_width="180dp"
                         android:layout_height="wrap_content"
+                        android:visibility="visible"
                         android:text="Book now"/>
 
                 </LinearLayout>

@@ -34,6 +34,7 @@ public class BookingsFragmentMenu extends Fragment implements RecyclerViewInterf
     FirebaseAuth mAuth;
     BookAdapter adapter;
     String userId,carId;
+    DataSnapshot child;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,42 +50,27 @@ public class BookingsFragmentMenu extends Fragment implements RecyclerViewInterf
         recyclerview.setAdapter(adapter);
         String databaseLocation = getString(R.string.databasePath);
 
-        vehicleRef = FirebaseDatabase.getInstance(databaseLocation).getReference("vehicle");
-        userRef = FirebaseDatabase.getInstance(databaseLocation).getReference("user").child(userId);
+        bookingRef = FirebaseDatabase.getInstance(databaseLocation).getReference("users").child(userId);
 
-        userRef.addValueEventListener(new ValueEventListener() {
+        bookingRef.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
-            public void onDataChange(@NonNull DataSnapshot userSnapshot) {
-                DataSnapshot bookedIdSnapshot = userSnapshot.child("bookCarIds");
-                for(DataSnapshot userSnapshot2 : bookedIdSnapshot.getChildren()){
-                    carIdList.add(userSnapshot2.getValue().toString());
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.child("bookedCars").exists()){
+                    child = snapshot.child("bookedCars");
+                    for(DataSnapshot snapshot1 : child.getChildren()){
+                        Booking booking = snapshot1.getValue(Booking.class);
+                        list.add(booking);
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) { }
-        });
+            public void onCancelled(@NonNull DatabaseError error) {
 
-
-        vehicleRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot vehicleSnapshot) {
-                for(DataSnapshot vehicleSnapshot2 : vehicleSnapshot.getChildren()){
-                    for(DataSnapshot childVehicle : vehicleSnapshot2.getChildren()){
-                        String checkId = childVehicle.getKey();
-                        if(checkId.equals(carId)){
-                            Booking booking = childVehicle.getValue(Booking.class);
-                            list.add(booking);
-                        }
-                    }
-                }
             }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) { }
         });
-
 
         return view;
     }

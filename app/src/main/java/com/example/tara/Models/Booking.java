@@ -2,9 +2,13 @@ package com.example.tara.Models;
 
 public class Booking {
 
-    String exterior1Url,bmy,location,priceRate, name,bookDate;
+    public String exterior1Url,bmy,location,priceRate, name,bookDate;
 
-    public Booking(String exterior1Url, String bmy, String location, String priceRate, String name, String bookDate) {
+    Booking(){
+
+    }
+
+     public Booking(String exterior1Url, String bmy, String location, String priceRate, String name, String bookDate) {
         this.exterior1Url = exterior1Url;
         this.bmy = bmy;
         this.location = location;
