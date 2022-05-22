@@ -85,6 +85,7 @@ public class BookingsFragmentMenu extends Fragment implements RecyclerViewInterf
             public void onCancelled(@NonNull DatabaseError error) { }
         });
 
+
         return view;
     }
 
