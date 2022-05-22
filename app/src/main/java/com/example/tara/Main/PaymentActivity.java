@@ -36,7 +36,7 @@ public class PaymentActivity extends AppCompatActivity {
     Button payBtn;
     TextView tvPrice;
     EditText cardNumberEditText, etExpiration, etCardName;
-    DatabaseReference userReference;
+    DatabaseReference userReference,bookReference;
     FirebaseAuth mAuth;
     String userId,cardId;
     DataSnapshot dataSnapshot;
@@ -65,6 +65,7 @@ public class PaymentActivity extends AppCompatActivity {
         tvPrice.setText("₱"+price);
         userId = mAuth.getCurrentUser().getUid();
         userReference = FirebaseDatabase.getInstance(databaseLocation).getReference("users").child(userId);
+
         calendar = Calendar.getInstance();
         simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         date = simpleDateFormat.format(calendar.getTime());
@@ -86,7 +87,6 @@ public class PaymentActivity extends AppCompatActivity {
                         startActivity(new Intent(PaymentActivity.this,ReceiptActivity.class));
                     }
                 },3000);
-
             }
         });
 
@@ -141,6 +141,12 @@ public class PaymentActivity extends AppCompatActivity {
 
 
     }
+
+
+
+
+
+
 
 
 }

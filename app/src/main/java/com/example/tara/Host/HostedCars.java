@@ -70,6 +70,7 @@ public class HostedCars extends Fragment implements RecyclerViewInterface {
         });
 
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         databaseReference = FirebaseDatabase.getInstance(databaseLocation).getReference("vehicle");
 
         databaseReference.addValueEventListener(new ValueEventListener() {

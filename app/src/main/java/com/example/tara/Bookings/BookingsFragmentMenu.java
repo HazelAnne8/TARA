@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class BookingsFragmentMenu extends Fragment implements RecyclerViewInterface {
     RecyclerView recyclerview;
-    DatabaseReference userRef,vehicleRef;
+    DatabaseReference userRef,vehicleRef,bookingRef;
     ArrayList<Booking> list;
     ArrayList<String> carIdList;
     FirebaseAuth mAuth;
