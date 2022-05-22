@@ -80,7 +80,7 @@ public class CarDetails extends AppCompatActivity {
                     for(DataSnapshot snapshot1 : child.getChildren()){
                         String checkHostId = snapshot1.getKey();
                         if(checkHostId.equals(carHostId)){
-                            bookBtn.setVisibility(View.INVISIBLE);
+                            //bookBtn.setVisibility(View.INVISIBLE);
                         }
                     }
                 }

@@ -50,14 +50,7 @@ public class ReceiptActivity extends AppCompatActivity {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
 
-        Toolbar toolbar =  findViewById(R.id.appBar);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
 
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
