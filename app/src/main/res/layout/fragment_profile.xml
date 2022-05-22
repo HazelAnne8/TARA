@@ -74,31 +74,9 @@
                 android:drawablePadding="10dp"
                 app:drawableLeftCompat="@drawable/ic_profile" />
 
-            <TextView
-                android:id="@+id/transacHistoryBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Transaction history"
-                android:textSize="17sp"
-                android:textColor="@color/black"
-                android:paddingLeft="30dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:drawablePadding="10dp"
-                app:drawableLeftCompat="@drawable/ic_transac_history" />
 
-            <TextView
-                android:id="@+id/taxInfoBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawablePadding="10dp"
-                android:paddingLeft="30dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:text="Tax information"
-                android:textColor="@color/black"
-                android:textSize="17sp"
-                app:drawableLeftCompat="@drawable/ic_tax_info" />
+
+
 
             <TextView
                 android:id="@+id/aboutTaraBtn"
