@@ -50,10 +50,6 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder>{
         if(car!=null){
             holder.bindCar(car);
         }
-//        holder.bmy.setText(car.getBmy());
-//        holder.city.setText(car.getLocation());
-//        holder.price.setText(car.getPriceRate());
-//        Glide.with(holder.img.getContext()).load(car.getCarUrl()).into(holder.img);
     }
 
     @Override

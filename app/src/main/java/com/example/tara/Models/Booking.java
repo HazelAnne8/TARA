@@ -2,14 +2,14 @@ package com.example.tara.Models;
 
 public class Booking {
 
-    String exterior1Url,bmy,location,priceRate,hostName,bookDate;
+    String exterior1Url,bmy,location,priceRate, name,bookDate;
 
-    public Booking(String exterior1Url, String bmy, String location, String priceRate, String hostName, String bookDate) {
+    public Booking(String exterior1Url, String bmy, String location, String priceRate, String name, String bookDate) {
         this.exterior1Url = exterior1Url;
         this.bmy = bmy;
         this.location = location;
         this.priceRate = priceRate;
-        this.hostName = hostName;
+        this.name = name;
         this.bookDate = bookDate;
     }
 
@@ -29,8 +29,8 @@ public class Booking {
         return priceRate;
     }
 
-    public String getHostName() {
-        return hostName;
+    public String getName() {
+        return name;
     }
 
     public String getBookDate() {
