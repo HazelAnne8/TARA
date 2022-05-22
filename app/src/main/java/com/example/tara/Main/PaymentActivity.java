@@ -28,6 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.regex.Pattern;
 
 public class PaymentActivity extends AppCompatActivity {
@@ -38,8 +40,11 @@ public class PaymentActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     String userId,cardId;
     DataSnapshot dataSnapshot;
+    Calendar calendar;
+    SimpleDateFormat simpleDateFormat;
+    String date;
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +65,10 @@ public class PaymentActivity extends AppCompatActivity {
         tvPrice.setText("₱"+price);
         userId = mAuth.getCurrentUser().getUid();
         userReference = FirebaseDatabase.getInstance(databaseLocation).getReference("users").child(userId);
+        calendar = Calendar.getInstance();
+        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        date = simpleDateFormat.format(calendar.getTime());
+
 
         LoadingDialog loadingDialog = new LoadingDialog(PaymentActivity.this);
 
@@ -73,6 +82,7 @@ public class PaymentActivity extends AppCompatActivity {
                     public void run() {
                         loadingDialog.dismissDialog();
                         userReference.child("bookCarIds").push().setValue(cardId);
+                        userReference.child("bookDate").setValue(date);
                         startActivity(new Intent(PaymentActivity.this,ReceiptActivity.class));
                     }
                 },3000);

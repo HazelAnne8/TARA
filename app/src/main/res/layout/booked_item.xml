@@ -32,32 +32,32 @@
             android:paddingLeft="10dp">
 
             <TextView
-                android:id="@+id/ivbBmy"
+                android:id="@+id/tvbBmy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Brand Model year"
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
             <TextView
-                android:id="@+id/ivbLocation"
+                android:id="@+id/tvbLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Location"
                 android:textColor="@color/black"/>
             <TextView
-                android:id="@+id/ivbPrice"
+                android:id="@+id/tvbPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Price"
                 android:textColor="@color/black"/>
             <TextView
-                android:id="@+id/ivbHost"
+                android:id="@+id/tvbHost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hosted by"
                 android:textColor="@color/black"/>
             <TextView
-                android:id="@+id/ivbookDate"
+                android:id="@+id/tvbookDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Book date"
