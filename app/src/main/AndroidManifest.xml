@@ -40,12 +40,6 @@
             android:name=".Profile.HowTaraWorks"
             android:exported="false" />
         <activity
-            android:name=".Profile.TaxInformation"
-            android:exported="false" />
-        <activity
-            android:name=".Profile.TransactionHistory"
-            android:exported="false" />
-        <activity
             android:name=".Profile.AccountActivity"
             android:exported="false" />
         <activity

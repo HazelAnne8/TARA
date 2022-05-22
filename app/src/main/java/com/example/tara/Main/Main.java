@@ -7,16 +7,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Toast;
 
 
 import com.example.tara.Host.HostedCars;
 import com.example.tara.Models.User;
-import com.example.tara.Profile.ProfileFragmentMenu;
 import com.example.tara.Explore.ExploreFragmentMenu;
 import com.example.tara.Host.HostFragmentMenu;
 import com.example.tara.Bookings.BookingsFragmentMenu;
