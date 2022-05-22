@@ -4,6 +4,7 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
@@ -49,12 +50,19 @@ public class ReceiptActivity extends AppCompatActivity {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
 
+        Toolbar toolbar =  findViewById(R.id.appBar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Toast.makeText(ReceiptActivity.this, "Sige lods ayos na lahat bayad ka na, salamat UWU", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(ReceiptActivity.this,Main.class));
             }
         });
     }

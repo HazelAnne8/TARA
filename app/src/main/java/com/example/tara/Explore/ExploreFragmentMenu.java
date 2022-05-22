@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.tara.Explore.CarDetails;
 import com.example.tara.Main.RecyclerViewInterface;
 import com.example.tara.Models.Car;
 import com.example.tara.Adapter.CarAdapter;
@@ -36,7 +35,7 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
     CarAdapter myAdapter;
     ArrayList<Car> list, filteredList;
     SwipeRefreshLayout swipeRefreshLayout;
-    String carId,uId,search;
+    String carId, carHostId,search;
     DataSnapshot dataSnapshot;
     SearchView searchView;
     Boolean isFiltered;
@@ -177,14 +176,14 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
             for(DataSnapshot childSnapshot2 : childSnapshot.getChildren()){
                 if(index == position){
                     DatabaseReference ref2 = childSnapshot2.getRef();
-                    uId = ref2.getKey();
+                    carHostId = ref2.getKey();
                 }
             }
             index++;
         }
         Intent intent = new Intent(getContext(), CarDetails.class);
         intent.putExtra("carId", carId);
-        intent.putExtra("userId", uId);
+        intent.putExtra("carHostId", carHostId);
         startActivity(intent);
     }
 }

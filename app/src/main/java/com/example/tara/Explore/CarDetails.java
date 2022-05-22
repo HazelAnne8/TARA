@@ -16,7 +16,9 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.tara.Main.PaymentActivity;
+import com.example.tara.Models.Booking;
 import com.example.tara.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,14 +28,16 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class CarDetails extends AppCompatActivity {
-    String carId,uId,price;
-    DatabaseReference vehicleRef,userRef;
+    String carId, carHostId,price, carHostName,passBmy,passLocation,passImageUrl, userId;
+    DatabaseReference vehicleRef, userHostRef,userRef;
     ImageSlider imageSlider;
     TextView tvBmy, tvLocation, tvPriceRate, tvTransmission, tvDrivetrain, tvSeats,
                 tvType, tvFuelType, tvMileage, tvDescription, hostName,tvPriceRate2;
     ImageView hostPic;
     Button bookBtn;
-    DataSnapshot dataSnapshot;
+    DataSnapshot dataSnapshot, child;
+    FirebaseAuth mAuth;
+    Boolean alreadyBooked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +49,11 @@ public class CarDetails extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.appBar);
         ArrayList<SlideModel> slideModels = new ArrayList<>();
 
+        mAuth = FirebaseAuth.getInstance();
+        userId = mAuth.getCurrentUser().getUid();
         imageSlider = findViewById(R.id.slider);
         carId = getIntent().getStringExtra("carId");
-        uId = getIntent().getStringExtra("userId");
+        carHostId = getIntent().getStringExtra("carHostId");
         tvBmy = findViewById(R.id.tvcdBMY);
         tvLocation = findViewById(R.id.tvcdLocation);
         tvPriceRate = findViewById(R.id.tvPrice);
@@ -62,9 +68,28 @@ public class CarDetails extends AppCompatActivity {
         hostPic = findViewById(R.id.ivHost);
         bookBtn = findViewById(R.id.bookBtn);
         tvPriceRate2 = findViewById(R.id.tvcdPricing);
-        vehicleRef = FirebaseDatabase.getInstance(databaseLocation).getReference("vehicle").child(carId).child(uId);
-        userRef = FirebaseDatabase.getInstance(databaseLocation).getReference("users").child(uId);
+        vehicleRef = FirebaseDatabase.getInstance(databaseLocation).getReference("vehicle").child(carId).child(carHostId);
+        userHostRef = FirebaseDatabase.getInstance(databaseLocation).getReference("users").child(carHostId);
+        userRef = FirebaseDatabase.getInstance(databaseLocation).getReference("users").child(userId);
 
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.child("bookedCars").exists()){
+                    child = snapshot.child("bookedCars");
+                    for(DataSnapshot snapshot1 : child.getChildren()){
+                        String checkHostId = snapshot1.getKey();
+                        if(checkHostId.equals(carHostId)){
+                            bookBtn.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         bookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +97,11 @@ public class CarDetails extends AppCompatActivity {
                Intent intent = new Intent(CarDetails.this, PaymentActivity.class);
                intent.putExtra("price",price);
                intent.putExtra("carId", carId);
+               intent.putExtra("carHostId", carHostId);
+               intent.putExtra("carHostName",carHostName);
+               intent.putExtra("bmy",passBmy);
+               intent.putExtra("location",passLocation);
+               intent.putExtra("carImageUrl",passImageUrl);
                startActivity(intent);
             }
         });
@@ -81,6 +111,9 @@ public class CarDetails extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 dataSnapshot = snapshot;
                 price = snapshot.child("priceRate").getValue().toString();
+                passBmy = snapshot.child("bmy").getValue().toString();
+                passLocation = snapshot.child("location").getValue().toString();
+                passImageUrl = snapshot.child("exterior1Url").getValue().toString();
                 tvBmy.setText(snapshot.child("bmy").getValue().toString());
                 tvLocation.setText(snapshot.child("location").getValue().toString());
                 tvPriceRate.setText(snapshot.child("priceRate").getValue().toString());
@@ -134,14 +167,15 @@ public class CarDetails extends AppCompatActivity {
             }
         });
 
-        userRef.addValueEventListener(new ValueEventListener() {
+        userHostRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(!(snapshot.child("imageUrl").getValue().toString().isEmpty())){
                     String imageUrl = snapshot.child("imageUrl").getValue().toString();
                     Glide.with(getApplicationContext()).load(imageUrl).into(hostPic);
                 }
-                hostName.setText(capitalizeWord(snapshot.child("name").getValue().toString()));
+                carHostName = snapshot.child("name").getValue().toString();
+                hostName.setText(capitalizeWord(carHostName));
             }
 
             @Override

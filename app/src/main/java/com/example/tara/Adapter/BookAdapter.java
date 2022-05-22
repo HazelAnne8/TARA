@@ -24,7 +24,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder>{
 
     ArrayList<Booking> list;
 
-
     public BookAdapter(Context context, ArrayList<Booking> list, RecyclerViewInterface recyclerViewInterface) {
         this.context = context;
         this.list = list;

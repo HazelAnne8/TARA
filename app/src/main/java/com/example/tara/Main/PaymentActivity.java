@@ -2,9 +2,9 @@ package com.example.tara.Main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.content.Intent;
 import android.os.Handler;
@@ -12,14 +12,13 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.tara.Adapter.LoadingDialog;
+import com.example.tara.Models.Booking;
 import com.example.tara.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -30,19 +29,17 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.regex.Pattern;
 
 public class PaymentActivity extends AppCompatActivity {
     Button payBtn;
     TextView tvPrice;
     EditText cardNumberEditText, etExpiration, etCardName;
-    DatabaseReference userReference,bookReference;
+    DatabaseReference userReference,bookReference, vehicleReference;
     FirebaseAuth mAuth;
-    String userId,cardId;
-    DataSnapshot dataSnapshot;
-    Calendar calendar;
-    SimpleDateFormat simpleDateFormat;
-    String date;
+    String userId, carId, key, carHostId,carHostName,price,bmy,location,carImageUrl;
+    DataSnapshot vehicleSnapshot, userSnapshot;
+
+
 
     @SuppressLint({"SetTextI18n", "SimpleDateFormat"})
     @Override
@@ -51,9 +48,15 @@ public class PaymentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_payment);
         getSupportActionBar().hide();
 
-        String price = getIntent().getStringExtra("price");
-        cardId = getIntent().getStringExtra("carId");
+
         String databaseLocation = getString(R.string.databasePath);
+        price = getIntent().getStringExtra("price");
+        carId = getIntent().getStringExtra("carId");
+        carHostId = getIntent().getStringExtra("carHostId");
+        carHostName = getIntent().getStringExtra("carHostName");
+        bmy = getIntent().getStringExtra("bmy");
+        location = getIntent().getStringExtra("location");
+        carImageUrl = getIntent().getStringExtra("carImageUrl");
 
         mAuth = FirebaseAuth.getInstance();
         payBtn = findViewById(R.id.payBtn);
@@ -65,11 +68,7 @@ public class PaymentActivity extends AppCompatActivity {
         tvPrice.setText("₱"+price);
         userId = mAuth.getCurrentUser().getUid();
         userReference = FirebaseDatabase.getInstance(databaseLocation).getReference("users").child(userId);
-
-        calendar = Calendar.getInstance();
-        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        date = simpleDateFormat.format(calendar.getTime());
-
+        vehicleReference = FirebaseDatabase.getInstance(databaseLocation).getReference("vehicle").child(carId);
 
         LoadingDialog loadingDialog = new LoadingDialog(PaymentActivity.this);
 
@@ -82,14 +81,12 @@ public class PaymentActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         loadingDialog.dismissDialog();
-                        userReference.child("bookCarIds").push().setValue(cardId);
-                        userReference.child("bookDate").setValue(date);
+                        uploadData();
                         startActivity(new Intent(PaymentActivity.this,ReceiptActivity.class));
                     }
                 },3000);
             }
         });
-
 
         cardNumberEditText.addTextChangedListener(new TextWatcher() {
             private static final char space = ' ';
@@ -117,6 +114,7 @@ public class PaymentActivity extends AppCompatActivity {
                 }
             }
         });
+
         etExpiration.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable editable) {
@@ -139,14 +137,51 @@ public class PaymentActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
 
+        Toolbar toolbar =  findViewById(R.id.appBar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        vehicleReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                vehicleSnapshot = snapshot;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        userReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userSnapshot = snapshot;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 
+    public void uploadData(){
+        key = userReference.push().getKey();
 
+        Calendar calendar = Calendar.getInstance();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String date = simpleDateFormat.format(calendar.getTime());
 
+        Booking booking = new Booking(carImageUrl,bmy,location,price,carHostName,date);
 
+        userReference.child("bookedCars").child(key).setValue(booking);
 
-
-
-
+    }
 }
