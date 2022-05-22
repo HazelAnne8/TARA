@@ -53,10 +53,12 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
         query = FirebaseDatabase.getInstance(databaseLocation).getReference("vehicle");
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         list = new ArrayList<>();
-
         swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
         searchView = view.findViewById(R.id.searchView);
         searchView.setFocusable(false);
+        myAdapter = new CarAdapter(getContext(),list,this);
+        recyclerView.setAdapter(myAdapter);
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -72,10 +74,6 @@ public class ExploreFragmentMenu extends Fragment implements RecyclerViewInterfa
                 return true;
             }
         });
-
-        myAdapter = new CarAdapter(getContext(),list,this);
-        recyclerView.setAdapter(myAdapter);
-
 
         query.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
