@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tara.Explore.ExploreFragmentMenu;
 import com.example.tara.Main.Main;
 import com.example.tara.Models.User;
 import com.example.tara.R;
@@ -149,6 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account.getIdToken());
             }catch (ApiException e){
+               Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         }

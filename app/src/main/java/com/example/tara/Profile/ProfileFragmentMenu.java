@@ -160,7 +160,7 @@ public class ProfileFragmentMenu extends Fragment {
     }
 
     private void logoutUser(){
-        mAuth.signOut();
+        mAuth.getInstance().signOut();
         gSignIn.signOut();
         startActivity(new Intent(getActivity(), LoginActivity.class));
         getActivity().finish();
