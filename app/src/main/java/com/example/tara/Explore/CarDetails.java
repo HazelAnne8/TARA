@@ -139,7 +139,7 @@ public class CarDetails extends AppCompatActivity {
                     slideModels.add(new SlideModel(interior4Url,null));
                 }
 
-                imageSlider.setImageList(slideModels, ScaleTypes.FIT);
+                imageSlider.setImageList(slideModels, ScaleTypes.CENTER_CROP);
             }
 
             @Override
