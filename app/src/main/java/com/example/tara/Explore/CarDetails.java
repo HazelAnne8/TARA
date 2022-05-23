@@ -72,25 +72,6 @@ public class CarDetails extends AppCompatActivity {
         userHostRef = FirebaseDatabase.getInstance(databaseLocation).getReference("users").child(carHostId);
         userRef = FirebaseDatabase.getInstance(databaseLocation).getReference("users").child(userId);
 
-        userRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.child("bookedCars").exists()){
-                    child = snapshot.child("bookedCars");
-                    for(DataSnapshot snapshot1 : child.getChildren()){
-                        String checkHostId = snapshot1.getKey();
-                        if(checkHostId.equals(carHostId)){
-                            //bookBtn.setVisibility(View.INVISIBLE);
-                        }
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
         bookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
