@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="485dp"
             android:contentDescription="TODO"
-            app:srcCompat="@drawable/logo_try_1" />
+            app:srcCompat="@drawable/logo" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
